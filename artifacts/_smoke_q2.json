@@ -1,0 +1,532 @@
+{
+ "npz": "data/packed/UIEB.npz",
+ "n_images": 1,
+ "size": 96,
+ "k_depth": 4,
+ "axis_table": {
+  "attenuation": [
+   {
+    "name": "attn_x0.4",
+    "attenuation": 0.4,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "attn_x0.7",
+    "attenuation": 0.7,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "attn_x1.0",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "attn_x1.4",
+    "attenuation": 1.4,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "attn_x1.9",
+    "attenuation": 1.9,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   }
+  ],
+  "backscatter": [
+   {
+    "name": "bs_x0.2",
+    "attenuation": 1.0,
+    "backscatter": 0.2,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "bs_x0.6",
+    "attenuation": 1.0,
+    "backscatter": 0.6,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "bs_x1.0",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "bs_x1.5",
+    "attenuation": 1.0,
+    "backscatter": 1.5,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "bs_x2.2",
+    "attenuation": 1.0,
+    "backscatter": 2.2,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   }
+  ],
+  "noise": [
+   {
+    "name": "nz_x0.25",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.001,
+    "shot_alpha": 0.002,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "nz_x0.5",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.002,
+    "shot_alpha": 0.004,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "nz_x1.0",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "nz_x2.0",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.008,
+    "shot_alpha": 0.016,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "nz_x4.0",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.016,
+    "shot_alpha": 0.032,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   }
+  ],
+  "gamma": [
+   {
+    "name": "gm_0.70",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 0.7,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "gm_0.85",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 0.85,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "gm_1.00",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "gm_1.20",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.2,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "gm_1.45",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.45,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   }
+  ],
+  "saturation": [
+   {
+    "name": "ex_0.60",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 0.6,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "ex_1.00",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "ex_1.80",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.8,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "ex_2.80",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 2.8,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "ex_4.20",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 4.2,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   }
+  ],
+  "illumination": [
+   {
+    "name": "il_0.00",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "il_0.25",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.25,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "il_0.50",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.5,
+    "depth_var": 1.0,
+    "seed": 0
+   },
+   {
+    "name": "il_0.75",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.75,
+    "depth_var": 1.0,
+    "seed": 0
+   }
+  ],
+  "depth_var": [
+   {
+    "name": "dv_0.00",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 0.0,
+    "seed": 0
+   },
+   {
+    "name": "dv_0.35",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 0.35,
+    "seed": 0
+   },
+   {
+    "name": "dv_0.70",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 0.7,
+    "seed": 0
+   },
+   {
+    "name": "dv_1.00",
+    "attenuation": 1.0,
+    "backscatter": 1.0,
+    "read_sigma": 0.004,
+    "shot_alpha": 0.008,
+    "gamma": 1.0,
+    "exposure": 1.0,
+    "illum_strength": 0.0,
+    "depth_var": 1.0,
+    "seed": 0
+   }
+  ]
+ },
+ "q2": [
+  {
+   "image": "116_img_",
+   "regime": "known_water",
+   "depth_var": 0.0,
+   "delta": 0.02,
+   "d_prime": 224.10649497699512,
+   "auc": 1.0,
+   "mean_llr_a": 330.9637870906845,
+   "mean_llr_b": 0.04834011940894209,
+   "sd_llr": 1.4765990918971115,
+   "n_draws": 64,
+   "pixel_rms_diff": 0.008454238626310869,
+   "noise_rms": 0.0065156696945421685
+  },
+  {
+   "image": "116_img_",
+   "regime": "known_water",
+   "depth_var": 0.0,
+   "delta": 0.05,
+   "d_prime": 551.492914942304,
+   "auc": 1.0,
+   "mean_llr_a": 2042.5657559695935,
+   "mean_llr_b": 0.1107928144602757,
+   "sd_llr": 3.7035017274316404,
+   "n_draws": 64,
+   "pixel_rms_diff": 0.021103607504690935,
+   "noise_rms": 0.006533534977940106
+  },
+  {
+   "image": "116_img_",
+   "regime": "known_water",
+   "depth_var": 0.0,
+   "delta": 0.1,
+   "d_prime": 1082.3078678284091,
+   "auc": 1.0,
+   "mean_llr_a": 7994.1029161045535,
+   "mean_llr_b": 0.19405379294123315,
+   "sd_llr": 7.385984247117179,
+   "n_draws": 64,
+   "pixel_rms_diff": 0.042065078723124386,
+   "noise_rms": 0.006562958447996992
+  },
+  {
+   "image": "116_img_",
+   "regime": "known_water",
+   "depth_var": 1.0,
+   "delta": 0.02,
+   "d_prime": 216.63397522519773,
+   "auc": 1.0,
+   "mean_llr_a": 305.3290240197165,
+   "mean_llr_b": 0.04413521095425781,
+   "sd_llr": 1.4092198072412654,
+   "n_draws": 64,
+   "pixel_rms_diff": 0.008128689448923138,
+   "noise_rms": 0.006488000195553944
+  },
+  {
+   "image": "116_img_",
+   "regime": "known_water",
+   "depth_var": 1.0,
+   "delta": 0.05,
+   "d_prime": 533.2936648330658,
+   "auc": 1.0,
+   "mean_llr_a": 1884.8927704861267,
+   "mean_llr_b": 0.10079324042881194,
+   "sd_llr": 3.5342478291687276,
+   "n_draws": 64,
+   "pixel_rms_diff": 0.02028898270032227,
+   "noise_rms": 0.006505186388685186
+  },
+  {
+   "image": "116_img_",
+   "regime": "known_water",
+   "depth_var": 1.0,
+   "delta": 0.1,
+   "d_prime": 1047.6173594452964,
+   "auc": 1.0,
+   "mean_llr_a": 7378.403735970981,
+   "mean_llr_b": 0.17497916757685547,
+   "sd_llr": 7.042866071549356,
+   "n_draws": 64,
+   "pixel_rms_diff": 0.0404277923767806,
+   "noise_rms": 0.0065334829292887
+  },
+  {
+   "image": "116_img_",
+   "regime": "unknown_water",
+   "noise_scale": 1.0,
+   "width_peak_norm": 0.5,
+   "amplitude_per_pixel": 0.5,
+   "censored": true,
+   "base_chi2": 48135.56044937665
+  },
+  {
+   "image": "116_img_",
+   "regime": "unknown_water",
+   "noise_scale": 2.0,
+   "width_peak_norm": 0.5,
+   "amplitude_per_pixel": 0.5,
+   "censored": true,
+   "base_chi2": 33061.96079561167
+  },
+  {
+   "image": "116_img_",
+   "regime": "unknown_water",
+   "noise_scale": 4.0,
+   "width_peak_norm": 0.017578125,
+   "amplitude_per_pixel": 0.017578125,
+   "censored": false,
+   "base_chi2": 6852.088236433776
+  }
+ ],
+ "manifest_sha256": "b3d76e25f50ab49713a0776eec5b3eff29a5699ddfe4986c71c0e86b8a7021b1"
+}

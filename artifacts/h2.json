@@ -1,0 +1,85 @@
+{
+ "npz": "data/packed/UIEB.npz",
+ "n_images": 3,
+ "n_blocks": 768,
+ "features_ordinary": [
+  "lum_mean",
+  "lum_std",
+  "rg_mean",
+  "gb_mean",
+  "grad",
+  "noise_lap",
+  "sat_frac",
+  "entropy"
+ ],
+ "features_support": [
+  "lq_colour",
+  "lq_band",
+  "lq_pixel",
+  "lev_colour",
+  "frac_qeff_colour",
+  "lq_colour_min",
+  "lq_colour_max"
+ ],
+ "cv": "5-fold grouped by image",
+ "targets": {
+  "abs": {
+   "r2_ordinary": -1.175019536298426,
+   "r2_with_support": -4.016190545686637,
+   "delta": -2.841171009388211
+  },
+  "rel": {
+   "r2_ordinary": -0.2974434459237254,
+   "r2_with_support": -2.080080413807425,
+   "delta": -1.7826369678836995
+  },
+  "chr": {
+   "r2_ordinary": -1.9133862301758153,
+   "r2_with_support": -6.320276759514047,
+   "delta": -4.406890529338232
+  },
+  "per_image": {
+   "abs": {
+    "rho": 1.0,
+    "p": 0.0
+   },
+   "rel": {
+    "rho": 1.0,
+    "p": 0.0
+   },
+   "chr": {
+    "rho": 1.0,
+    "p": 0.0
+   }
+  }
+ },
+ "per_image": [
+  {
+   "name": "116_img_",
+   "lq_colour": 1.3389368174899172,
+   "lq_band": 2.6796228661783323,
+   "lq_pixel": 3.656319315667586,
+   "lev_colour": 0.9894575113974472,
+   "qeff_ratio_colour": 0.006097051910791993,
+   "chi2_over_dof": 2.9650599947096867
+  },
+  {
+   "name": "12290",
+   "lq_colour": 1.972835245742649,
+   "lq_band": 2.8717971773801203,
+   "lq_pixel": 3.3052332767173285,
+   "lev_colour": 0.9684209757255514,
+   "qeff_ratio_colour": 0.031170360122179424,
+   "chi2_over_dof": 376.3769474422605
+  },
+  {
+   "name": "12299",
+   "lq_colour": 1.6158535361689559,
+   "lq_band": 4.17805570341813,
+   "lq_pixel": 4.786775515524848,
+   "lev_colour": 0.9255300678267444,
+   "qeff_ratio_colour": 0.11108947797289419,
+   "chi2_over_dof": 175.35452352566492
+  }
+ ]
+}

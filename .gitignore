@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+_ops/
+.pytest_cache/
+*.log
+
+# Large binary intermediates -- reproducible from the scripts, never committed.
+runs/
+data/packed/
+predictions/
+checkpoints/
+*.pth
+*.pt
+*.npz
+
+# artifacts/ IS committed: those JSONs are the per-image evidence the report cites.

@@ -1,0 +1,38 @@
+{
+  "UIEB": {
+    "run": "/home/user/MambaCue/output/L1+SSIM+Prep+Lab+grad+Angle/four/color-illumination-contrast/both/UIEB/20261009_092226",
+    "n": 89,
+    "psnr": 24.47616761773828,
+    "ssim": 0.9221251660518432,
+    "mse": 390.75158359227555,
+    "psnr_std": 4.423907831302362,
+    "ssim_std": 0.06393375260733031,
+    "recorded": {
+      "raw": "[Testing] SSIM: 0.9224, PSNR: 24.4629, MSE: 392.455788, UIQM: 3.4772, UCIQE: 0.3831"
+    }
+  },
+  "LSUI": {
+    "run": "/home/user/MambaCue/output/L1+SSIM+Prep+Lab+grad+Angle/four/color-illumination-contrast/both/LSUI/20261009_112952",
+    "n": 428,
+    "psnr": 31.19566377299002,
+    "ssim": 0.9350896245129755,
+    "mse": 104.87060133764678,
+    "psnr_std": 5.414293985792756,
+    "ssim_std": 0.05924203254086545,
+    "recorded": {
+      "raw": "[Testing] SSIM: 0.9357, PSNR: 31.2323, MSE: 104.352415, UIQM: 3.3523, UCIQE: 0.3705"
+    }
+  },
+  "UFO": {
+    "run": "/home/user/MambaCue/output/L1+SSIM+Prep+Lab+grad+Angle/four/color-illumination-contrast/both/UFO/20261010_020343",
+    "n": 120,
+    "psnr": 28.596473115935073,
+    "ssim": 0.8779610797762871,
+    "mse": 113.5301529566447,
+    "psnr_std": 2.425149828787555,
+    "ssim_std": 0.03489090726533384,
+    "recorded": {
+      "raw": "[Testing] SSIM: 0.8789, PSNR: 28.6112, MSE: 113.964865, UIQM: 3.2141, UCIQE: 0.3915"
+    }
+  }
+}
