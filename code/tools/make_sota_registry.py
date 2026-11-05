@@ -173,14 +173,14 @@ NOT_RUN_REASON = {
 # Per-method caveats that apply to every dataset row for that method.
 METHOD_NOTES = {
     "Phaseformer": (
-        "official weight = checkpoint/<DS>/netG_model_epoch_800.pth (repo ships "
+        "local checkpoint (publication origin unverified) = checkpoint/<DS>/netG_model_epoch_800.pth (repo ships "
         "801 epochs with no 'best' marker; epoch 800 is the one the repo's own "
         "evaluation used). Input normalised to [-1,1]; output taken from "
         "tuple[0]. Repo test.py resizes BICUBIC and its metric uses "
         "win_size=min(7,..); both are overridden here."
     ),
     "SS-UIE": (
-        "official weight = saved_models/<DS>/SS_UIE_best.pth['model'] (dict "
+        "local checkpoint (publication origin unverified) = saved_models/<DS>/SS_UIE_best.pth['model'] (dict "
         "checkpoint; carries epoch/best_psnr). Model built with num_memblock=4, "
         "num_resblock=4 to match the shipped weights. Forward uses spectral "
         "ops, which cannot run on CUDA on this host (see notes below)."
@@ -193,7 +193,7 @@ METHOD_NOTES = {
         "Dataset dir for UFO is UFO_CCL (not UFO_CC)."
     ),
     "AquaClarity": (
-        "official weight = checkpoints/<DS>/best.pth['state_dict'] (dict "
+        "local checkpoint (publication origin unverified) = checkpoints/<DS>/best.pth['state_dict'] (dict "
         "checkpoint; carries epoch/psnr/ssim). Model dim=36 as in the shipped "
         "weights. Output already clamped to [0,1] by the model's NILUT."
     ),
@@ -205,38 +205,45 @@ METHOD_NOTES = {
         "from tuple[0]."
     ),
     "SFGNet": (
-        "official weight = models/<DS>/net_last.pth (the default in the repo's "
+        "local checkpoint (publication origin unverified) = models/<DS>/net_last.pth (the default in the repo's "
         "eval.py). Output taken from tuple[1] (restored). Two Sobel-kernel "
         "buffers (g.weight_v/weight_h) are absent from the checkpoint because "
         "they are fixed constants re-registered by the module, not trained."
     ),
     "FDCE-Net": (
-        "official weight = training_data/<DS>/checkpoints/best.pth['model']. "
+        "local checkpoint (publication origin unverified) = training_data/<DS>/checkpoints/best.pth['model']. "
         "Output taken from tuple[2] (img_enhance). Their test.py resizes "
         "max-side 512; that is overridden by the frozen 256x256 resize."
     ),
     "MambaCue": (
-        "FROZEN SOTA REFERENCE. Scored from the repo's own official prediction "
-        "tiles (pred/*.png = hstack(raw, GT, pred)), split at w//3, under the "
-        "same frozen protocol. Reproduces the run's recorded result.txt to "
-        "within 0.04 dB on all three datasets, which is why the protocol is "
-        "taken to be the authors' own rather than an approximation of it. "
-        "Weights: output/.../both/<DS>/<timestamp>/best_model.pth."
+        "LEGACY REFERENCE ONLY -- NOT a unified-protocol rerun. The numbers in "
+        "this row were re-derived by splitting the repo's saved prediction "
+        "tiles (pred/*.png = hstack(raw, GT, pred)) at w//3. That is a rescoring "
+        "of pre-existing outputs, not fresh inference: the tiles were produced "
+        "with the repo's own per-dataset preprocessing (UFO in particular is "
+        "240x320 cropped, not a whole-image 256x256 resize), and the checkpoint "
+        "is the repo's variant_07 user-modified model whose publication status "
+        "is unverified. The unified_psnr/ssim/n columns are therefore left blank "
+        "and no method's gap is computed against this row. It is retained only "
+        "because it is the one measurement that reproduces a recorded result "
+        "(run result.txt 24.4629 dB vs 24.4762 re-derived) and thus corroborates "
+        "the estimator itself."
     ),
 }
 
 # Caveats about the evaluation host that affected several methods.
 HOST_NOTES = (
-    "Evaluation host: cuFFT is broken on this GPU node -- EVERY device-side "
-    "torch.fft transform raises CUFFT_INTERNAL_ERROR, verified with a "
-    "length-8 1-D float32 transform in a fresh process. Spectral baselines "
-    "(Phaseformer, SS-UIE, SFGNet, CDF-UIE, FDCE-Net) therefore run their "
-    "transforms on CPU and move the result back; the transforms are float32 "
-    "on either device, so the values are unchanged and only the execution "
-    "device moves. Phaseformer's authors ship the same CPU round-trip. "
-    "torch.set_num_threads(8) is also pinned: the default 48 threads on a "
-    "shared 96-core host made Phaseformer 32x slower through thread "
-    "oversubscription without changing any number."
+    "Host caveat: on this shared GPU node, device-side torch.fft raised "
+    "CUFFT_INTERNAL_ERROR during our runs (reproduced with a length-8 1-D "
+    "float32 transform in a fresh process). Spectral baselines (Phaseformer, "
+    "SS-UIE, SFGNet, CDF-UIE, FDCE-Net) were therefore run with their "
+    "transforms on CPU and the result moved back. The transforms are float32 "
+    "on either device, so this is an execution-location change, not a "
+    "numerical-protocol change -- but it does mean the wall-clock times in "
+    "these artifacts must NOT be compared with published runtimes. "
+    "torch.set_num_threads(8) was also pinned: the default 48 threads on a "
+    "shared 96-core host made Phaseformer ~32x slower through oversubscription "
+    "without changing any metric."
 )
 
 SSIM_NOTE = (
@@ -342,7 +349,7 @@ def build_rows(only_measured=False):
                     rec["unified_psnr"] = _fmt(agg.get("psnr"), 4)
                     rec["unified_ssim"] = _fmt(agg.get("ssim"), 4)
                     rec["unified_n"] = str(n_scored)
-                    rec["unified_source"] = "official_weights_rerun"
+                    rec["unified_source"] = "local_checkpoint_rerun_provenance_unverified"
                     if n_scored != n_total:
                         notes.append(
                             "ONLY %d of %d images produced a prediction; the "
@@ -367,26 +374,27 @@ def build_rows(only_measured=False):
             if method in NOT_RUN_REASON:
                 notes.append(NOT_RUN_REASON[method])
             if method == "MambaCue":
-                # MambaCue is scored from its own official prediction tiles, which
-                # is a re-run of official weights under the frozen protocol in every
-                # sense that matters for comparability: same weights, same images,
-                # same metric code.  The only difference is that inference was done
-                # by the authors' own test.py rather than by run_baseline.py, so the
-                # recorded-vs-measured agreement travels in the note as the check.
+                # Rescoring saved tiles cannot establish their inference provenance.
+                # In particular UFO tiles are 240x320, not the primary whole256
+                # track. Keep measured legacy values in the original artifact.
+                rec["unified_psnr"] = ""
+                rec["unified_ssim"] = ""
+                rec["unified_n"] = ""
+                rec["unified_source"] = "saved_tiles_only_not_qualified_unified_rerun"
                 notes.append(
-                    "Protocol anchor: the recorded result.txt was reproduced by "
-                    "scoring the repo's saved official prediction tiles under the "
-                    "frozen protocol (UIEB 24.4762/0.9221 vs 24.4629/0.9224, "
-                    "LSUI 31.1957/0.9351 vs 31.2323/0.9357, UFO 28.5965/0.8780 "
-                    "vs 28.6112/0.8789 -- all within 0.04 dB). This agreement is "
-                    "why the frozen protocol is taken to be the authors' own "
-                    "rather than an approximation of it."
+                    "Saved-tile rescoring only, NOT a fresh checkpoint inference. "
+                    "Legacy PSNR/SSIM: UIEB 24.4762/0.9221, LSUI 31.1957/0.9351, "
+                    "UFO 28.5965/0.8780; artifacts/mambacue_verify.json preserves "
+                    "full precision. UFO tiles are 240x320 and the source loader "
+                    "uses a different preprocessing path. Numeric agreement with "
+                    "result.txt does not establish canonical split or protocol "
+                    "identity. Excluded from unified SOTA qualification."
                 )
             if method in METHOD_NOTES:
                 notes.append(METHOD_NOTES[method])
 
             rec["notes"] = " ".join(notes) if notes else ""
-            if only_measured and rec["unified_source"] != "official_weights_rerun":
+            if only_measured and not rec["unified_n"]:
                 continue
             rows.append(rec)
     return rows
@@ -419,9 +427,25 @@ def main():
     if not args.no_host_note:
         tail.append(HOST_NOTES)
     tail.append(SSIM_NOTE)
-    tail_s = " ".join(tail)
+    tail_s = "\n\n".join(tail)
+
+    # The host and estimator caveats apply to every row identically, so writing
+    # them into each row's ``notes`` made the CSV 95% duplicated text and pushed
+    # the one column a reader actually scans off the right edge of every line.
+    # They live in one companion file instead, with a pointer in each row, so a
+    # row can still be read on its own without carrying 2 kB of shared prose.
+    protocol_path = os.path.join(os.path.dirname(args.out) or ".", "sota_protocol.md")
+    if tail_s:
+        with open(protocol_path, "w", encoding="utf-8") as fh:
+            fh.write("# Shared protocol and host caveats for sota_registry.csv\n\n")
+            fh.write("Every row of `sota_registry.csv` was produced under these "
+                     "conditions; the `notes` column there records only what is "
+                     "specific to that row.\n\n")
+            fh.write(tail_s + "\n")
+
+    pointer = "protocol: see sota_protocol.md" if tail_s else ""
     for rec in rows:
-        rec["notes"] = (rec["notes"] + " " + tail_s).strip()
+        rec["notes"] = " ".join(x for x in (rec.get("notes", ""), pointer) if x).strip()
 
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     with open(args.out, "w", encoding="utf-8", newline="") as fh:
@@ -439,7 +463,7 @@ def main():
             rec["reported_psnr"] or "-", rec["reported_ssim"] or "-",
             rec["unified_psnr"] or "-", rec["unified_ssim"] or "-",
             rec["unified_n"] or "-", rec["unified_source"]))
-    n_meas = sum(1 for r in rows if r["unified_source"] == "official_weights_rerun")
+    n_meas = sum(1 for r in rows if r["unified_n"])
     print("\n%d rows, %d measured, %d not_run -> %s" % (
         len(rows), n_meas, len(rows) - n_meas, args.out))
 

@@ -573,7 +573,9 @@ def direction_info(an: dict, v: np.ndarray) -> dict:
     """
     n = an["T"].shape[0]
     v = np.asarray(v, dtype=np.float64).reshape(n, 3)
-    r = ((an["T"] * v) / an["sigma"]).ravel()
+    # analyse.q already contains (gain*T/sigma)^2. Reuse that derivative
+    # to avoid silently dropping channel gain in direction-resolved features.
+    r = (np.sqrt(an["q"]) * v).ravel()
     q = float((r ** 2).sum())
     A = an["A"]
     absorbed = float(r @ A @ an["cov"]["invG"] @ (A.T @ r))
@@ -863,7 +865,9 @@ def profile_table(
     rows: List[dict] = []
     comps = components(h, w, k_low)
     picks = [("dc", f"dc_{c}", comps[f"dc_{c}"]) for c in range(3)]
-    picks += [("low", f"low_0_{j}", comps[f"low_0_{j}"]) for j in (0, 4, 8)]
+    low_names = [name for name in comps if name.startswith("low_0_")]
+    indices = np.unique(np.linspace(0, len(low_names) - 1, min(3, len(low_names)), dtype=int))
+    picks += [("low", low_names[j], comps[low_names[j]]) for j in indices]
     px = pixel_dirs(h * w, k_px)
     picks += [("pixel", f"px_{i}", px[i]) for i in range(k_px)]
     for kind, name, v in picks:
@@ -913,9 +917,13 @@ def components(h: int, w: int, k_low: int = 9) -> Dict[str, np.ndarray]:
         out[f"dc_{c}"] = v
     phi = depth_basis(h, w, k_low)
     phi = phi - phi.mean(axis=0, keepdims=True)
-    q_mat, _ = np.linalg.qr(phi)
+    # The hat basis sums to DC; centring removes one dimension (or more on
+    # degenerate image grids). QR would retain arbitrary null-space columns.
+    u, s, _ = np.linalg.svd(phi, full_matrices=False)
+    tol = np.finfo(float).eps * max(phi.shape) * (s[0] if s.size else 0.0)
+    q_mat = u[:, s > tol]
     for c in range(3):
-        for j in range(k_low):
+        for j in range(q_mat.shape[1]):
             v = np.zeros((n, 3))
             v[:, c] = q_mat[:, j]
             out[f"low_{c}_{j}"] = v

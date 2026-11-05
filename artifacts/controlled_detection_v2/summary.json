@@ -1,0 +1,128 @@
+{
+  "n_rows": 416,
+  "n_scenes": 8,
+  "draws_per_class": 256,
+  "linear_mean_absolute_auc_error": 0.0054778705643550455,
+  "linear_max_absolute_auc_error": 0.06301657132579108,
+  "mismatch_mean_absolute_auc_error": 0.019313104876751686,
+  "data_space": "linear radiance by construction; gamma mismatch is deliberately unmodelled",
+  "interpretation": "instrument validation only; NOT proof of H1 enhancer-risk prediction, real-water validity or novelty",
+  "source_sha256": "6733e4b1ae630a075a7e4e5d3680d19f3d8d99178723cd941caa0b29c987e3c5",
+  "elapsed_sec": 15.616927146911621,
+  "conditions": [
+    [
+      "attenuation",
+      0.4,
+      0.012,
+      false,
+      1.0,
+      1
+    ],
+    [
+      "attenuation",
+      1.0,
+      0.012,
+      false,
+      1.0,
+      1
+    ],
+    [
+      "attenuation",
+      2.5,
+      0.012,
+      false,
+      1.0,
+      1
+    ],
+    [
+      "noise",
+      1.0,
+      0.004,
+      false,
+      1.0,
+      1
+    ],
+    [
+      "noise",
+      1.0,
+      0.012,
+      false,
+      1.0,
+      1
+    ],
+    [
+      "noise",
+      1.0,
+      0.036,
+      false,
+      1.0,
+      1
+    ],
+    [
+      "brightness_matched",
+      0.4,
+      0.012,
+      true,
+      1.0,
+      1
+    ],
+    [
+      "brightness_matched",
+      1.0,
+      0.012,
+      true,
+      1.0,
+      1
+    ],
+    [
+      "brightness_matched",
+      2.5,
+      0.012,
+      true,
+      1.0,
+      1
+    ],
+    [
+      "extra_view",
+      1.0,
+      0.012,
+      false,
+      1.0,
+      1
+    ],
+    [
+      "extra_view",
+      1.0,
+      0.012,
+      false,
+      1.0,
+      2
+    ],
+    [
+      "response_mismatch",
+      1.0,
+      0.012,
+      false,
+      1.0,
+      1
+    ],
+    [
+      "response_mismatch",
+      1.0,
+      0.012,
+      false,
+      1.6,
+      1
+    ]
+  ],
+  "scene_seeds": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007
+  ]
+}

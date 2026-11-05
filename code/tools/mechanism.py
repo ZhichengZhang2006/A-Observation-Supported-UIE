@@ -1,4 +1,15 @@
-"""H3 -- does the support signal actually buy anything, applied to a frozen method?
+"""Historical H3 exploratory diagnostic; versioned interpretation correction.
+
+This script applies matched frozen-output interventions. It does not establish
+physical correctness, and the self-orbit projection is an algebraic identity,
+not an observation-consistency test. The unrestricted clipped oracle orbit is
+reference-assisted and is not a certified feasible family or a deployable rule.
+This test split has already been inspected; results remain exploratory.
+
+The following legacy motivation is retained as historical text only; claims
+about universal consistency or ceilings on all methods are withdrawn:
+
+H3 -- does the support signal actually buy anything, applied to a frozen method?
 
 The measurement half of this project is settled: the observation determines colour
 only up to a one-parameter family (``obsui.gauge``), and the information the
@@ -108,20 +119,20 @@ def chroma_opp(a: np.ndarray) -> np.ndarray:
 
 
 def apply_chroma(a: np.ndarray, ch: np.ndarray) -> np.ndarray:
-    """Rebuild an RGB image from its luma and a target chroma.
+    """Invert EPS-offset log chroma, preserving luma BEFORE gamut clipping.
 
-    Luma is preserved exactly so a chroma edit cannot smuggle in a brightness
-    change -- that separation is what makes the ablation table interpretable.
+    R+EPS = exp(rg)*(G+EPS), B+EPS = (G+EPS)/exp(gb).
+    Since LUM sums to one, G+EPS = (luma+EPS)/denom. Omitting EPS in
+    this inverse changed even zero-intervention outputs (legacy v1 bug).
     """
     luma = (a @ LUM)
     rg, gb = ch[..., 0], ch[..., 1]
-    # ratio form: R/G = e^rg, G/B = e^gb, plus luma -> solve for scale
     r_over_g = np.exp(rg)
     g_over_b = np.exp(gb)
-    # luma = 0.2126R + 0.7152G + 0.0722B, with R = r_over_g * G, B = G / g_over_b
     denom = 0.2126 * r_over_g + 0.7152 + 0.0722 / g_over_b
-    g = luma / np.maximum(denom, 1e-6)
-    out = np.stack([g * r_over_g, g, g / np.maximum(g_over_b, 1e-6)], axis=-1)
+    gp = (luma + EPS) / np.maximum(denom, 1e-12)
+    out = np.stack([gp * r_over_g - EPS, gp - EPS,
+                    gp / np.maximum(g_over_b, 1e-12) - EPS], axis=-1)
     return np.clip(out, 0.0, 1.0)
 
 
@@ -132,26 +143,14 @@ def smooth(g: np.ndarray, k: int = 5) -> np.ndarray:
 def project_onto_family(base: np.ndarray, beta: np.ndarray, binf: np.ndarray,
                         target: np.ndarray = None,
                         n_grid: int = 401, d_max: float = 1.2) -> dict:
-    """Move ``base`` onto the nearest member of the admissible gauge family.
+    """Nearest member of a method output's own one-parameter colour orbit.
 
-    The family is ``J'(dd)_c = b_c + (J_c - b_c) exp(beta_c dd)``.  The projection
-    is the member closest to what the method already said:
-
-        dd* = argmin_{|dd| <= d_max} sum_c || J_c - J'(dd)_c ||^2
-
-    **This projection is the identity.**  ``dd = 0`` is always admissible and
-    reproduces ``J`` exactly, so the minimiser is ``dd* = 0`` for every input.  That
-    is not an implementation slip; it is the content of the gauge theorem, and it is
-    the single most consequential thing this experiment found:
-
-        *Every restoration is already observation-consistent, for some water depth.*
-        A consistency-based loss, gate or projection therefore cannot correct colour.
-        Anything that does correct colour is drawing on a scene prior, not on the
-        measurement.
-
-    The function returns ``dd`` alongside the result so the ~identity can be
-    reported as a measured fact rather than asserted from the algebra, and so a
-    reader can see the projection was actually run rather than skipped.
+    This objective never reads the actual observation. With target=None its
+    zero-step identity is tautological, not a physical consistency certificate.
+    With a reference target it is an oracle least-squares colour-orbit fit.
+    Steps are not constrained by depth or radiance bounds here, and clipping
+    the returned image need not preserve the conditional render symmetry.
+    The grid objective is evaluated before clipping, as in the legacy version.
     """
     J = np.asarray(base, dtype=np.float64)
     b = binf.reshape(1, 1, 3)
@@ -159,19 +158,31 @@ def project_onto_family(base: np.ndarray, beta: np.ndarray, binf: np.ndarray,
     d = J - b
 
     grid = np.linspace(-d_max, d_max, n_grid)
-    # (H, W, n_grid, 3): the family evaluated at every candidate step
-    Jp = b[..., None, :] + d[..., None, :] * np.exp(be[..., None, :]
-                                                    * grid.reshape(1, 1, -1, 1))
-
+    # The cost is separable over pixels: for a fixed candidate step the residual
+    # is ``d * (exp(be*dd) - 1)``, so ``sum_pixels ||.||^2`` collapses to three
+    # per-channel scalars and no (H, W, n_grid, 3) tensor is ever materialised.
+    # The explicit broadcast version allocates ~630 MB at 256x256x401x3 float64
+    # and made this function thrash; it produced the same answer far slower.
     if target is not None:
         # Oracle variant, for diagnosis only: let the reference pick the step.  This
         # measures how much colour error is *inside* the family at all, i.e. the
         # ceiling of any consistency-based correction.  It is never deployable and
         # is labelled as such wherever it appears.
-        T = np.asarray(target, dtype=np.float64)
-        cost = ((T[..., None, :] - Jp) ** 2).sum(axis=(0, 1, 3))
+        D = d - (np.asarray(target, dtype=np.float64) - b)   # per-pixel, (H, W, 3)
+        # ||D + d*(u-1)||^2 sums to  ||D||^2 + 2(u-1)*<D,d> + (u-1)^2*||d||^2
+        # Each of DD / Dd / dd_ is one value *per channel*, so it stays length-3.
+        DD = (D * D).sum(axis=(0, 1))
+        Dd = (D * d).sum(axis=(0, 1))
+        dd_ = (d * d).sum(axis=(0, 1))
+        u = np.exp(be.reshape(3, 1) * grid.reshape(1, -1))   # (3, n_grid)
+        m = u - 1.0
+        cost = (DD.reshape(3, 1) + 2.0 * Dd.reshape(3, 1) * m
+                + dd_.reshape(3, 1) * m * m).sum(axis=0)
     else:
-        cost = ((J[..., None, :] - Jp) ** 2).sum(axis=(0, 1, 3))
+        # Closest member to J itself: ||d*(u-1)||^2 = (u-1)^2 * ||d||^2
+        dd_ = (d * d).sum(axis=(0, 1))
+        u = np.exp(be.reshape(3, 1) * grid.reshape(1, -1))   # (3, n_grid)
+        cost = (((u - 1.0) ** 2) * dd_.reshape(3, 1)).sum(axis=0)
 
     k = int(np.argmin(cost))
     dd = float(grid[k])
@@ -218,7 +229,14 @@ def _metrics(pred, gt):
     pc, gc = chroma_opp(pred), chroma_opp(gt)
     chr_err = float(np.abs(pc - gc).mean())
     lum_err = float(np.abs(pred @ LUM - gt @ LUM).mean())
-    return {"psnr": m["psnr"], "ssim": m["ssim"], "chroma": chr_err, "luma": lum_err}
+    # Version 2: keep the old Gaussian11 value as a labelled sensitivity metric;
+    # win5 is the already-used baseline protocol, not a new acceptance threshold.
+    from skimage.metrics import structural_similarity
+    ssim5 = structural_similarity(pr, gr, channel_axis=-1,
+                                  win_size=5, data_range=255)
+    return {"psnr": m["psnr"], "ssim": float(ssim5),
+            "ssim_legacy11": m["ssim"], "mse": m["mse"],
+            "chroma": chr_err, "luma": lum_err}
 
 
 def main():
@@ -227,7 +245,11 @@ def main():
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--strength", type=float, default=1.0,
                     help="multiplier on the damping; 1.0 = full pull to J_obs")
-    ap.add_argument("--out", default="artifacts/h3_mechanism.json")
+    ap.add_argument("--out", default="artifacts/h3_mechanism_v2.json")
+    ap.add_argument("--noise-mode", choices=["image", "misfit"], default="image",
+                    help="image reproduces the historical rule; misfit is a separate sensitivity run")
+    ap.add_argument("--save-dir", default="",
+                    help="optional directory for every variant's RGB PNG prediction")
     args = ap.parse_args()
 
     dat = np.load(args.npz, allow_pickle=True)
@@ -250,7 +272,8 @@ def main():
         h, w = gt.shape[:2]
 
         # 1) the observation-consistent anchor
-        fit = S.fit_water(raw, pred, h, w, k_depth=9)
+        fit = S.fit_water(raw, pred, h, w, k_depth=9,
+                          noise_mode=args.noise_mode)
         # ``fit_water`` and ``invert`` work on flattened ``(N, 3)`` arrays; put the
         # anchor back on the image grid before anything spatial happens to it.
         J_obs = np.clip(S.invert(raw.reshape(-1, 3), fit["tau"], fit["water"]),
@@ -326,6 +349,13 @@ def main():
 
         for v in variants:
             acc[v].append(_metrics(cand[v], gt))
+            if args.save_dir:
+                from PIL import Image
+                dest = os.path.join(args.save_dir, v)
+                os.makedirs(dest, exist_ok=True)
+                Image.fromarray(np.clip(cand[v] * 255.0 + 0.5, 0, 255)
+                                .astype(np.uint8)).save(
+                                    os.path.join(dest, names[i] + ".png"))
 
         if (i + 1) % 20 == 0 or i == n - 1:
             b = acc["base"][-1]
@@ -355,7 +385,15 @@ def main():
 
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as fh:
-        json.dump({"npz": args.npz, "n": n, "strength": args.strength,
+        import hashlib
+        json.dump({"artifact_version": "20261105.v2",
+                   "npz": args.npz, "n": n, "strength": args.strength,
+                   "noise_mode": args.noise_mode,
+                   "exploratory_test_reuse": True,
+                   "interpretation": "orbit identity is tautological; oracle is reference-assisted, not a physical feasibility certificate",
+                   "ssim_protocol": "skimage win_size=5; legacy11 recorded separately",
+                   "source_sha256": hashlib.sha256(open(__file__, "rb").read()).hexdigest(),
+                   "names": names[:n], "per_image": acc,
                    "variants": res,
                    "dd_oracle": {"mean": float(np.mean(dd_oracle)),
                                  "median": float(np.median(dd_oracle)),

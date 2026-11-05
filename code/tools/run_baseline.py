@@ -534,14 +534,20 @@ def main():
     ap.add_argument("--max-images", type=int, default=0, help="0 = all (debug only)")
     ap.add_argument("--device", default="cuda:0")
     ap.add_argument("--save-preds", action="store_true", default=True)
+    ap.add_argument("--split", default="test", choices=["test", "val", "train"],
+                    help="which data split to run; the checkpoint is still chosen by --dataset")
     args = ap.parse_args()
 
     method, dataset = args.method, args.dataset
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
 
-    split = dataio.DATASETS[dataset]
-    input_dir = os.path.join(DATASET_ROOT, split, "input")
-    ref_dir = os.path.join(DATASET_ROOT, split, "GT")
+    # --split selects the DATA while --dataset selects the CHECKPOINT, so the
+    # same frozen weights can be run over train/val/test for the error-model study
+    # without pretending those extra splits are a new benchmark.
+    data_rel = f"{dataset}/{args.split}"
+    tag = dataset if args.split == "test" else f"{dataset}-{args.split}"
+    input_dir = os.path.join(DATASET_ROOT, data_rel, "input")
+    ref_dir = os.path.join(DATASET_ROOT, data_rel, "GT")
     pairs = dataio.resolve_pairs(input_dir, ref_dir, dataset)
     if args.max_images:
         pairs.pairs = pairs.pairs[: args.max_images]
@@ -549,7 +555,7 @@ def main():
     if n_total == 0:
         raise SystemExit(f"no pairs in {input_dir} / {ref_dir}")
 
-    print(f"[{method}/{dataset}] pairs={n_total} device={device}", flush=True)
+    print(f"[{method}/{tag}] pairs={n_total} device={device}", flush=True)
     for note in pairs.notes:
         print("  " + note, flush=True)
 
@@ -562,7 +568,7 @@ def main():
     print(f"  ckpt={ckpt_path}", flush=True)
     print(f"  built in {time.time() - t0:.1f}s", flush=True)
 
-    pred_dir = os.path.join(PRED_ROOT, dataset, method)
+    pred_dir = os.path.join(PRED_ROOT, tag, method)
     os.makedirs(pred_dir, exist_ok=True)
     os.makedirs(ART_ROOT, exist_ok=True)
 
@@ -603,6 +609,7 @@ def main():
     out = {
         "method": method,
         "dataset": dataset,
+        "split": args.split,
         "checkpoint": ckpt_path,
         "model_meta": {k: v for k, v in meta.items() if k != "lab2rgb"},
         "n_total": n_total,
@@ -620,18 +627,18 @@ def main():
         "elapsed_sec": elapsed,
         "rows": rows,
     }
-    art_path = os.path.join(ART_ROOT, f"baseline_{method}_{dataset}.json")
+    art_path = os.path.join(ART_ROOT, f"baseline_{method}_{tag}.json")
     with open(art_path, "w", encoding="utf-8") as fh:
         json.dump(out, fh, indent=1)
 
     print("", flush=True)
     if rows:
-        print(f"[{method}/{dataset}] n={agg['n']}/{n_total} "
+        print(f"[{method}/{tag}] n={agg['n']}/{n_total} "
               f"PSNR={agg['psnr']:.4f} SSIM(win5)={agg['ssim']:.6f} "
               f"SSIM(frozen11)={agg['ssim_frozen11']:.6f} "
               f"({elapsed:.1f}s)", flush=True)
     else:
-        print(f"[{method}/{dataset}] NO PREDICTIONS PRODUCED", flush=True)
+        print(f"[{method}/{tag}] NO PREDICTIONS PRODUCED", flush=True)
     print(f"  artifact={art_path}", flush=True)
     print(f"  predictions={pred_dir}", flush=True)
     return 0 if out["status"] == "ok" else 3

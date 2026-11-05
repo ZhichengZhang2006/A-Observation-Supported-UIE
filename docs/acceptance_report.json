@@ -1,0 +1,478 @@
+{
+ "schema": "obsui.acceptance.v1",
+ "date": "2026-11-05",
+ "verifier": "none — these are agent-proposed statuses, not an external verdict",
+ "protocol": {
+  "resize": "whole image -> 256x256, PIL BILINEAR, no crop, no pad",
+  "psnr": "skimage peak_signal_noise_ratio(data_range=1.0)",
+  "ssim": "skimage structural_similarity(win_size=5, channel_axis=-1, data_range=1.0), per-image mean",
+  "anchor": "reproduces MambaCue result.txt within 0.04 dB on 3 datasets"
+ },
+ "items": {
+  "performance": {
+   "status": "unverifiable",
+   "reason": "No qualified frozen SOTA under the same protocol. MambaCue is a legacy saved-tile reference (different UFO preprocessing) and is beaten by Phaseformer on LSUI; the six baseline checkpoints carry unverified publication provenance.",
+   "gate": "max(0,(S-R)/S) <= 0.05 on every PSNR/SSIM for UIEB-R90/LSUI/UFO-120",
+   "gate_evaluated": false,
+   "registry": {
+    "rows_total": 30,
+    "rows_with_unified_measurement": 21,
+    "rows_not_run": 6,
+    "not_run_methods": [
+     "WWE-UIE",
+     "WaterNet"
+    ],
+    "denominator_estimate": "none Qualified: MambaCue is a legacy saved-tile reference only, and Phaseformer beats it on LSUI",
+    "file": "docs/sota_registry.csv"
+   }
+  },
+  "novelty": {
+   "status": "unsupported",
+   "reason": "H2 does not separate support from ordinary + ensemble uncertainty, which is the one evidence the novelty audit requires.",
+   "audit": "docs/novelty_audit.md",
+   "near_neighbours": [
+    "MCL-UIE (arXiv:2610.39183)",
+    "Solomatov & Akkaynak (arXiv:2608.15598)",
+    "UADiff (TGRS 2025)"
+   ],
+   "verification": "docs/literature_verification_20261105.md"
+  },
+  "mechanism": {
+   "status": "unsupported",
+   "reason": "Under matched controls the support gate makes chroma worse (+1.70 % error, bootstrap CI excludes 0) and the matched-strength controls (const/random/degrade) do not do better; the oracle projection also loses PSNR, so the anchoring is wrong.",
+   "artifact": "artifacts/h3_mechanism_v2.json",
+   "invalidated_artifacts": [
+    "artifacts/h3_mechanism.json (apply_chroma was not an exact inverse)"
+   ],
+   "h3": {
+    "status": "measured",
+    "n_images": 89,
+    "artifact": "artifacts/h3_mechanism_v2.json",
+    "intervals": "artifacts/h3_mechanism_v2_intervals.json",
+    "paired_vs_base": null
+   }
+  },
+  "reproducibility": {
+   "status": "incomplete",
+   "have": [
+    "protocol verified against the repository's own recorded result",
+    "SHA-256 manifest of 13578 source files and 6789 pairs",
+    "environment freeze",
+    "per-experiment ledger",
+    "logs and artifacts for every reported number"
+   ],
+   "missing": [
+    "three-seed training study",
+    "canonical split provenance",
+    "publication-verified baseline weights",
+    "sealed test set"
+   ],
+   "artifacts": {
+    "provenance": {
+     "n_source_files": 13578,
+     "n_pairs": 6789,
+     "manifest_sha256": "14bc34127319d4e6f26fa6f3c69014a4c9af88dffb71b8b0f362d2825c908e6d",
+     "elapsed_sec": 289.47722148895264,
+     "recorded_wall_time": "2026-11-05T10:10:13Z",
+     "original_data_license": "not yet independently verified; no source images redistributed"
+    },
+    "instrument_checks": {
+     "version": "20261105.v3",
+     "status": "implementation_checks_passed",
+     "not_scientific_acceptance": true,
+     "checks": [
+      {
+       "check": "negative_signal_floor",
+       "result": {
+        "dd_requested": 1.0,
+        "dd_used": 0.5999822369362968,
+        "dd_pos_max": 0.5999822369362968,
+        "dd_neg_min": -1.0,
+        "admissible": false,
+        "chroma_p50": 1.043204917987013,
+        "chroma_p95": 1.043204917987013,
+        "chroma_max": 1.043204917987013,
+        "luma_p95": 0.1268716788259587,
+        "headroom_p50": 0.95,
+        "lift_pred_r": 1.0,
+        "lift_pred_g": 0.8288892853345031,
+        "lift_pred_b": 0.6538248489646008,
+        "lift_err_max": 2.220446049250313e-16,
+        "chroma_pred_rg": 0.08943834587870261
+       },
+       "min_Jprime": 0.0
+      },
+      {
+       "check": "maximum_depth_tau",
+       "lo": -0.1,
+       "hi": 0.02956989247311892
+      },
+      {
+       "check": "range_endpoints_and_render",
+       "cases": 24,
+       "max_render_error": 2.220446049250313e-16
+      },
+      {
+       "check": "rank_aware_directions",
+       "shape": [
+        16,
+        16
+       ],
+       "k": 9,
+       "low_rank": 8,
+       "orthogonality_error": 1.1102230246251565e-15
+      },
+      {
+       "check": "rank_aware_directions",
+       "shape": [
+        9,
+        13
+       ],
+       "k": 4,
+       "low_rank": 3,
+       "orthogonality_error": 6.661338147750939e-16
+      },
+      {
+       "check": "rank_aware_directions",
+       "shape": [
+        1,
+        1
+       ],
+       "k": 1,
+       "low_rank": 0,
+       "orthogonality_error": 0.0
+      },
+      {
+       "check": "gain_aware_direction_finite_difference",
+       "q": 2159.2178341227686,
+       "q_finite_difference": 2159.217834043868
+      },
+      {
+       "check": "oracle_psnr_extremum",
+       "result": {
+        "psnr_at_zero": 35.84800807926388,
+        "psnr_best": 99.0,
+        "psnr_worst": 27.23888143576048,
+        "psnr_spread": 71.76111856423952,
+        "psnr_gain_max": 63.15199192073612,
+        "dd_best": 0.09999999999999998,
+        "dd_lo": -0.2,
+        "dd_hi": 0.2,
+        "n_members": 41
+       }
+      },
+      {
+       "check": "family_external_is_not_observation_inconsistent",
+       "global_family_fraction": 0.0030978302521589285,
+       "max_render_error": 0.0
+      }
+     ],
+     "sources": {
+      "C:\\Users\\Zhingcheng Zhang\\Desktop\\AutoResearch-UIE\\A Observation-Supported-UIE\\code\\obsui\\support.py": "63f016f2b982b84728fd094c3786cd75d788677ee0e14540bf8059ddc21fb113",
+      "C:\\Users\\Zhingcheng Zhang\\Desktop\\AutoResearch-UIE\\A Observation-Supported-UIE\\code\\obsui\\gauge.py": "9091765ce9f5dfebcd5b610763a69308cafa305232d9afd847230a67f7420776"
+     }
+    },
+    "controlled_detection": {
+     "n_rows": 416,
+     "n_scenes": 8,
+     "draws_per_class": 256,
+     "linear_mean_absolute_auc_error": 0.0054778705643550455,
+     "linear_max_absolute_auc_error": 0.06301657132579108,
+     "mismatch_mean_absolute_auc_error": 0.019313104876751686,
+     "data_space": "linear radiance by construction; gamma mismatch is deliberately unmodelled",
+     "interpretation": "instrument validation only; NOT proof of H1 enhancer-risk prediction, real-water validity or novelty",
+     "source_sha256": "6733e4b1ae630a075a7e4e5d3680d19f3d8d99178723cd941caa0b29c987e3c5",
+     "elapsed_sec": 15.616927146911621,
+     "conditions": [
+      [
+       "attenuation",
+       0.4,
+       0.012,
+       false,
+       1.0,
+       1
+      ],
+      [
+       "attenuation",
+       1.0,
+       0.012,
+       false,
+       1.0,
+       1
+      ],
+      [
+       "attenuation",
+       2.5,
+       0.012,
+       false,
+       1.0,
+       1
+      ],
+      [
+       "noise",
+       1.0,
+       0.004,
+       false,
+       1.0,
+       1
+      ],
+      [
+       "noise",
+       1.0,
+       0.012,
+       false,
+       1.0,
+       1
+      ],
+      [
+       "noise",
+       1.0,
+       0.036,
+       false,
+       1.0,
+       1
+      ],
+      [
+       "brightness_matched",
+       0.4,
+       0.012,
+       true,
+       1.0,
+       1
+      ],
+      [
+       "brightness_matched",
+       1.0,
+       0.012,
+       true,
+       1.0,
+       1
+      ],
+      [
+       "brightness_matched",
+       2.5,
+       0.012,
+       true,
+       1.0,
+       1
+      ],
+      [
+       "extra_view",
+       1.0,
+       0.012,
+       false,
+       1.0,
+       1
+      ],
+      [
+       "extra_view",
+       1.0,
+       0.012,
+       false,
+       1.0,
+       2
+      ],
+      [
+       "response_mismatch",
+       1.0,
+       0.012,
+       false,
+       1.0,
+       1
+      ],
+      [
+       "response_mismatch",
+       1.0,
+       0.012,
+       false,
+       1.6,
+       1
+      ]
+     ],
+     "scene_seeds": [
+      1000,
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007
+     ]
+    }
+   }
+  }
+ },
+ "h2": {
+  "status": "screening_exploratory",
+  "cv": "image-disjoint 5-fold, out-of-fold predictions pooled",
+  "domains": {
+   "UIEB": {
+    "n_images": 89,
+    "n_rows": 267,
+    "backbones": [
+     "phaseformer",
+     "aquaclarity",
+     "fdcenet"
+    ],
+    "targets": {
+     "psnr": {
+      "r2_oof": {
+       "F0_ordinary": -0.0127,
+       "F1_plus_support": 0.0116,
+       "F2_shuffled_support": -0.0019,
+       "F3_noise_features": 0.0314
+      },
+      "delta_F1_minus_F0": {
+       "mean": 0.0243,
+       "ci95": [
+        -0.0495,
+        0.1023
+       ]
+      },
+      "delta_F1_minus_F2": {
+       "mean": 0.0118,
+       "ci95": [
+        -0.0599,
+        0.0818
+       ]
+      },
+      "spearman_F1": 0.1452,
+      "spearman_F0": 0.1426
+     },
+     "ssim": {
+      "r2_oof": {
+       "F0_ordinary": 0.0619,
+       "F1_plus_support": 0.095,
+       "F2_shuffled_support": 0.0342,
+       "F3_noise_features": 0.0248
+      },
+      "delta_F1_minus_F0": {
+       "mean": 0.0368,
+       "ci95": [
+        -0.0183,
+        0.1075
+       ]
+      },
+      "delta_F1_minus_F2": {
+       "mean": 0.0626,
+       "ci95": [
+        0.0001,
+        0.127
+       ]
+      },
+      "spearman_F1": 0.3131,
+      "spearman_F0": 0.2775
+     },
+     "chroma": {
+      "r2_oof": {
+       "F0_ordinary": 0.1058,
+       "F1_plus_support": 0.0977,
+       "F2_shuffled_support": 0.0705,
+       "F3_noise_features": 0.1071
+      },
+      "delta_F1_minus_F0": {
+       "mean": -0.0073,
+       "ci95": [
+        -0.0446,
+        0.043
+       ]
+      },
+      "delta_F1_minus_F2": {
+       "mean": 0.0275,
+       "ci95": [
+        -0.0067,
+        0.0679
+       ]
+      },
+      "spearman_F1": 0.3358,
+      "spearman_F0": 0.3036
+     }
+    }
+   },
+   "LSUI": {
+    "n_images": 428,
+    "n_rows": 428,
+    "backbones": [
+     "phaseformer"
+    ],
+    "targets": {
+     "psnr": {
+      "r2_oof": {
+       "F0_ordinary": 0.1733,
+       "F1_plus_support": 0.0944,
+       "F2_shuffled_support": 0.0644,
+       "F3_noise_features": 0.0733
+      },
+      "delta_F1_minus_F0": {
+       "mean": -0.0802,
+       "ci95": [
+        -0.1326,
+        -0.025
+       ]
+      },
+      "delta_F1_minus_F2": {
+       "mean": 0.0286,
+       "ci95": [
+        -0.0267,
+        0.0828
+       ]
+      },
+      "spearman_F1": 0.3036,
+      "spearman_F0": 0.4265
+     },
+     "ssim": {
+      "r2_oof": {
+       "F0_ordinary": 0.1858,
+       "F1_plus_support": 0.12,
+       "F2_shuffled_support": 0.1007,
+       "F3_noise_features": 0.0805
+      },
+      "delta_F1_minus_F0": {
+       "mean": -0.0672,
+       "ci95": [
+        -0.1036,
+        -0.0321
+       ]
+      },
+      "delta_F1_minus_F2": {
+       "mean": 0.0167,
+       "ci95": [
+        -0.0502,
+        0.0777
+       ]
+      },
+      "spearman_F1": 0.4973,
+      "spearman_F0": 0.5763
+     },
+     "chroma": {
+      "r2_oof": {
+       "F0_ordinary": 0.1007,
+       "F1_plus_support": 0.1128,
+       "F2_shuffled_support": 0.0765,
+       "F3_noise_features": 0.0792
+      },
+      "delta_F1_minus_F0": {
+       "mean": 0.0148,
+       "ci95": [
+        -0.0438,
+        0.0902
+       ]
+      },
+      "delta_F1_minus_F2": {
+       "mean": 0.0398,
+       "ci95": [
+        -0.0105,
+        0.0999
+       ]
+      },
+      "spearman_F1": 0.472,
+      "spearman_F0": 0.4365
+     }
+    }
+   }
+  }
+ },
+ "exploratory": true,
+ "exploratory_reason": "the public test splits were inspected during protocol work; no number here is a sealed confirmation"
+}

@@ -1,0 +1,24 @@
+{
+  "generated": "2026-11-05",
+  "protocol": "frozen 256x256 bilinear",
+  "datasets": {
+    "UIEB": {
+      "n": 89,
+      "identity_psnr": 17.036402805070182,
+      "identity_ssim": 0.761983559111684,
+      "gt_mean": 109.59448367915348
+    },
+    "LSUI": {
+      "n": 428,
+      "identity_psnr": 17.98530626521443,
+      "identity_ssim": 0.7856995501816877,
+      "gt_mean": 101.20233769877308
+    },
+    "UFO": {
+      "n": 120,
+      "identity_psnr": 20.815051922818483,
+      "identity_ssim": 0.7990562667948818,
+      "gt_mean": 99.66440069410537
+    }
+  }
+}

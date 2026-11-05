@@ -1,0 +1,807 @@
+{
+  "pairing": [
+    {
+      "dataset": "UIEB",
+      "split": "train",
+      "n_pairs": 712,
+      "notes": [
+        "inputs=712 refs=712 matched=712 unmatched=0",
+        "input_dir=/home/user/UnderWaterDataset/UIEB/train/input",
+        "ref_dir=/home/user/UnderWaterDataset/UIEB/train/GT"
+      ],
+      "nonbijective_refs": {}
+    },
+    {
+      "dataset": "UIEB",
+      "split": "val",
+      "n_pairs": 89,
+      "notes": [
+        "inputs=89 refs=89 matched=89 unmatched=0",
+        "input_dir=/home/user/UnderWaterDataset/UIEB/val/input",
+        "ref_dir=/home/user/UnderWaterDataset/UIEB/val/GT"
+      ],
+      "nonbijective_refs": {}
+    },
+    {
+      "dataset": "UIEB",
+      "split": "test",
+      "n_pairs": 89,
+      "notes": [
+        "inputs=89 refs=89 matched=89 unmatched=0",
+        "input_dir=/home/user/UnderWaterDataset/UIEB/test/input",
+        "ref_dir=/home/user/UnderWaterDataset/UIEB/test/GT"
+      ],
+      "nonbijective_refs": {}
+    },
+    {
+      "dataset": "LSUI",
+      "split": "train",
+      "n_pairs": 3423,
+      "notes": [
+        "inputs=3423 refs=3423 matched=3423 unmatched=0",
+        "input_dir=/home/user/UnderWaterDataset/LSUI/train/input",
+        "ref_dir=/home/user/UnderWaterDataset/LSUI/train/GT"
+      ],
+      "nonbijective_refs": {}
+    },
+    {
+      "dataset": "LSUI",
+      "split": "val",
+      "n_pairs": 428,
+      "notes": [
+        "inputs=428 refs=428 matched=428 unmatched=0",
+        "input_dir=/home/user/UnderWaterDataset/LSUI/val/input",
+        "ref_dir=/home/user/UnderWaterDataset/LSUI/val/GT"
+      ],
+      "nonbijective_refs": {}
+    },
+    {
+      "dataset": "LSUI",
+      "split": "test",
+      "n_pairs": 428,
+      "notes": [
+        "inputs=428 refs=428 matched=428 unmatched=0",
+        "input_dir=/home/user/UnderWaterDataset/LSUI/test/input",
+        "ref_dir=/home/user/UnderWaterDataset/LSUI/test/GT"
+      ],
+      "nonbijective_refs": {}
+    },
+    {
+      "dataset": "UFO",
+      "split": "train",
+      "n_pairs": 1200,
+      "notes": [
+        "inputs=1200 refs=1200 matched=1200 unmatched=0",
+        "input_dir=/home/user/UnderWaterDataset/UFO/train/input",
+        "ref_dir=/home/user/UnderWaterDataset/UFO/train/GT"
+      ],
+      "nonbijective_refs": {}
+    },
+    {
+      "dataset": "UFO",
+      "split": "val",
+      "n_pairs": 300,
+      "notes": [
+        "inputs=300 refs=300 matched=300 unmatched=0",
+        "input_dir=/home/user/UnderWaterDataset/UFO/val/input",
+        "ref_dir=/home/user/UnderWaterDataset/UFO/val/GT"
+      ],
+      "nonbijective_refs": {}
+    },
+    {
+      "dataset": "UFO",
+      "split": "test",
+      "n_pairs": 120,
+      "notes": [
+        "inputs=120 refs=120 matched=120 unmatched=0",
+        "input_dir=/home/user/UnderWaterDataset/UFO/test/input",
+        "ref_dir=/home/user/UnderWaterDataset/UFO/test/GT"
+      ],
+      "nonbijective_refs": {}
+    }
+  ],
+  "duplicates": [
+    {
+      "dataset": "UIEB",
+      "splits": [
+        "train",
+        "val"
+      ],
+      "input": {
+        "n_heldout_files": 0,
+        "matches": []
+      },
+      "GT": {
+        "n_heldout_files": 0,
+        "matches": []
+      },
+      "identical_paired_samples": []
+    },
+    {
+      "dataset": "UIEB",
+      "splits": [
+        "train",
+        "test"
+      ],
+      "input": {
+        "n_heldout_files": 0,
+        "matches": []
+      },
+      "GT": {
+        "n_heldout_files": 0,
+        "matches": []
+      },
+      "identical_paired_samples": []
+    },
+    {
+      "dataset": "UIEB",
+      "splits": [
+        "val",
+        "test"
+      ],
+      "input": {
+        "n_heldout_files": 0,
+        "matches": []
+      },
+      "GT": {
+        "n_heldout_files": 0,
+        "matches": []
+      },
+      "identical_paired_samples": []
+    },
+    {
+      "dataset": "LSUI",
+      "splits": [
+        "train",
+        "val"
+      ],
+      "input": {
+        "n_heldout_files": 12,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/1139.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/340.jpg"
+            ],
+            "sha256": "6e2b9bada747794bae4a9550265c1cc952c927af28bf67b3d25e1980953522fe"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/1241.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/196.jpg"
+            ],
+            "sha256": "3b9ba76f2968f2b17ad97882a1eb40a6f353e3ec95203eaab7083be68b1b5990"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/1277.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/211.jpg"
+            ],
+            "sha256": "2163ae6094943a78827e812e02aada7a34e81290824fed21482d8b655ae9abb0"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/242.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/305.jpg"
+            ],
+            "sha256": "29f5013adaefda45c022cc30fc9fb47af18b1f114582f65770462656dfbfd65c"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/243.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/714.jpg"
+            ],
+            "sha256": "b9b835f565c99f907f08179e0e97fbec5457c3c309fa08b24d842cec60700c3e"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/250.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/1305.jpg"
+            ],
+            "sha256": "6bf36d2efd78ee6a3e7f472e291d6d65b7688a2a08447c6f712cce244a4d3cbb"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/2648.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/3109.jpg"
+            ],
+            "sha256": "881dda699b333b91ef658dda5e5bb95625da6b6766425451afe62cbfd506ae04"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/2662.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/2956.jpg"
+            ],
+            "sha256": "3467e31a70911fe85c6e62016b2293a7ed29e7dd290241252e1b31c9b9b1ab31"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/2996.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/3157.jpg"
+            ],
+            "sha256": "a9adea29aef0b646e013f2b7d0e04da8a768b329d77ec60ffdd19263d47432f7"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/3294.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/2713.jpg"
+            ],
+            "sha256": "23fd3cf8540282d4fe4d6737a7e92a669803349e2ab73791f45b53e011872501"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/439.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/233.jpg"
+            ],
+            "sha256": "52d3afe88a8ac18d099f2b0fa72277d495dcb1356977550617869ffe2e9d7133"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/input/526.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/1250.jpg"
+            ],
+            "sha256": "534446c9e8f34895164d8fd54a129c2ff37d5c9bb525cea88fc2fa87b7716d08"
+          }
+        ]
+      },
+      "GT": {
+        "n_heldout_files": 14,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/1074.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1098.jpg"
+            ],
+            "sha256": "a7a6229da8225bbf2b76b3d1f3af35920dfba8f552a56b5d5f8dba64bc93c851"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/1277.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/211.jpg"
+            ],
+            "sha256": "f503617a71670be243b7c94a75d797c13e8acfae6e8106a52162c9e064210e38"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/1620.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1624.jpg"
+            ],
+            "sha256": "1ed6de047566db9b6bedeff139ab13a2a4f0a906a9467b471bda4416dc5e7a10"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/227.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/392.jpg"
+            ],
+            "sha256": "98f7e2997cdb6a5dec0d26bf97a0f8cf5d797ea7a7746fa989d85bfd33885912"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/242.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/305.jpg"
+            ],
+            "sha256": "d0cf1a2841b7427b5e29df442eb68d20afcc303c702017a86bec4239e254cb0e"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/243.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/714.jpg"
+            ],
+            "sha256": "b95fc1ec9a06189419ff3201c0adb1f515871e8be5c352ef5941adc74019fd8c"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/250.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1305.jpg"
+            ],
+            "sha256": "560c37ff2393b6c8dbd3855909229a589398636298d4b8ab31f0e22d48609688"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/2648.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/3109.jpg"
+            ],
+            "sha256": "61a6acd48bb85d0e12f4cefd689edb5f9f2298cc0529018ee6662b01c699dfbf"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/2662.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/2956.jpg"
+            ],
+            "sha256": "4480fd8700d5670380a071a92e52e08f8f5dadf162a25e2bb1670f9e87cbfbd1"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/2996.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/3157.jpg"
+            ],
+            "sha256": "140cec06b5b067d045362e716f14c4e09e76bc0bda2cdce98dbac86c36af94ff"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/3294.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/2713.jpg"
+            ],
+            "sha256": "2b751a150747601705ca0c421ee875c6461a6476572c296d6873681ae3f6d949"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/439.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/233.jpg"
+            ],
+            "sha256": "0d1c78699f59c141074f274213ea8cbe537581d6c29fcc02edeb3035f7bf5f9d"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/526.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1250.jpg"
+            ],
+            "sha256": "da058672bd9f9eb64bc735241677c1fb8f5603fb5d4b1ac66ac7a5816f8ee5a9"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/val/GT/641.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/664.jpg"
+            ],
+            "sha256": "91e7250b00bfd398cd1c55a061bd92ee275e33357fbb433b66ab67daa3101a84"
+          }
+        ]
+      },
+      "identical_paired_samples": [
+        "1277",
+        "242",
+        "243",
+        "250",
+        "2648",
+        "2662",
+        "2996",
+        "3294",
+        "439",
+        "526"
+      ]
+    },
+    {
+      "dataset": "LSUI",
+      "splits": [
+        "train",
+        "test"
+      ],
+      "input": {
+        "n_heldout_files": 10,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/244.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/571.jpg"
+            ],
+            "sha256": "a882178d2e262836cdee2215ad410d8d2abe3dc58368f6d87dc0f1b40fad2660"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/2683.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/3109.jpg"
+            ],
+            "sha256": "881dda699b333b91ef658dda5e5bb95625da6b6766425451afe62cbfd506ae04"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/2918.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/2587.jpg"
+            ],
+            "sha256": "ef80e20ea85ad4f7febb548cccde0751870eaf2d35a4d8b5f47e964e18051afd"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/3051.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/2874.jpg"
+            ],
+            "sha256": "0508e706dea3ae77e13cb1f5493950b899f2b3bf453efa7b1d1e24e21075b535"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/3082.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/2851.jpg"
+            ],
+            "sha256": "4279a9bfb3ea60ed9c2c1bedf4c6c0a35806d163ebbf5e40ff4e326bd2de20a9"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/3180.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/3188.jpg"
+            ],
+            "sha256": "931e7759554c66d976705312887b26f32ace4e495e64fd88f4086fb4b0db85d8"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/361.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/1185.jpg"
+            ],
+            "sha256": "750915e25b205d2fce61f29a6a59072ddd0a1d40ec21c5306b0b4674b7541c90"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/493.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/1122.jpg"
+            ],
+            "sha256": "1e11c799b2b45e97bbc9d542bf1172c97c05c4d62232a10b22a4f3c9966c84c3"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/944.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/550.jpg"
+            ],
+            "sha256": "d7217ebe7dac89c4349861a945ca7130594ab4ea939e857c35be6ee88e4db76d"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/95.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/input/1287.jpg"
+            ],
+            "sha256": "8ea9e47a10cdaace0b36e44890fe45ffd489ea8611c61579d10df5440ccc2228"
+          }
+        ]
+      },
+      "GT": {
+        "n_heldout_files": 17,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1052.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1098.jpg"
+            ],
+            "sha256": "a7a6229da8225bbf2b76b3d1f3af35920dfba8f552a56b5d5f8dba64bc93c851"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1063.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1098.jpg"
+            ],
+            "sha256": "a7a6229da8225bbf2b76b3d1f3af35920dfba8f552a56b5d5f8dba64bc93c851"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1085.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1098.jpg"
+            ],
+            "sha256": "a7a6229da8225bbf2b76b3d1f3af35920dfba8f552a56b5d5f8dba64bc93c851"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1538.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1536.jpg"
+            ],
+            "sha256": "028dc07817b86a1d538d29c770e4866b694bf188f31cd544de06dc12339b0e6e"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1803.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1809.jpg"
+            ],
+            "sha256": "975e4eb0500c7e06f145188c314e2d71af78c45a63868dde65fb876d0179e584"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1947.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1826.jpg",
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1837.jpg",
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1858.jpg",
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1869.jpg",
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1936.jpg"
+            ],
+            "sha256": "c917374692294ff1ae7278d7e6fa1dc5764622e81329bd8d9c068e60571a102a"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1958.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1826.jpg",
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1837.jpg",
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1858.jpg",
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1869.jpg",
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1936.jpg"
+            ],
+            "sha256": "c917374692294ff1ae7278d7e6fa1dc5764622e81329bd8d9c068e60571a102a"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/244.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/571.jpg"
+            ],
+            "sha256": "fd153c53f9521d934f04bbd1c4bc1c1c4f52763945a293cfaf5fbd099f1c90c0"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/2683.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/3109.jpg"
+            ],
+            "sha256": "61a6acd48bb85d0e12f4cefd689edb5f9f2298cc0529018ee6662b01c699dfbf"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/2918.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/2587.jpg"
+            ],
+            "sha256": "4682c2d8ea6b7353f58aa545e93b69e37e128e614c2215be8aeec069b51b08c4"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/3051.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/2874.jpg"
+            ],
+            "sha256": "b881bc4ce585773e00f95e1394e3fad94bea9867addccf23adeb94cf4bedd3bf"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/3082.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/2851.jpg"
+            ],
+            "sha256": "50c26041142fe03b0a17774a01ddc6e2e74f31e7314eeb733f60cdf21fb417f9"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/3180.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/3188.jpg"
+            ],
+            "sha256": "14380c2a7b96c0659d240db676204e063d6286904ae7c344832d5ec5cdc8d263"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/361.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1185.jpg"
+            ],
+            "sha256": "69c3f62b064c7695cb949ac165d2568a4f16431543e6299f773e14342dfc370b"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/493.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/1122.jpg"
+            ],
+            "sha256": "c49bb1ead3b00af8928659d15a7f0e2f7d1e47ebbe4f3fc81d6461539aa7f4ea"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/881.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/932.jpg"
+            ],
+            "sha256": "b77dd78a877250fe7133568b8effd21a9ffe7597bdfcc240f39c7bdb0ad17ff6"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/944.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/train/GT/550.jpg"
+            ],
+            "sha256": "fdcf6e16171b7c2fbb2eaa63df85aa3bc05a5006b09bceb4f1f812541651b10e"
+          }
+        ]
+      },
+      "identical_paired_samples": [
+        "244",
+        "2683",
+        "2918",
+        "3051",
+        "3082",
+        "3180",
+        "361",
+        "493",
+        "944"
+      ]
+    },
+    {
+      "dataset": "LSUI",
+      "splits": [
+        "val",
+        "test"
+      ],
+      "input": {
+        "n_heldout_files": 2,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/2683.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/val/input/2648.jpg"
+            ],
+            "sha256": "881dda699b333b91ef658dda5e5bb95625da6b6766425451afe62cbfd506ae04"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/input/820.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/val/input/1191.jpg"
+            ],
+            "sha256": "d3e4df6102e0b1f2cdef99ead420dab4a3624f1fc9d6991fd5d42a2be06756f9"
+          }
+        ]
+      },
+      "GT": {
+        "n_heldout_files": 5,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1052.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/val/GT/1074.jpg"
+            ],
+            "sha256": "a7a6229da8225bbf2b76b3d1f3af35920dfba8f552a56b5d5f8dba64bc93c851"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1063.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/val/GT/1074.jpg"
+            ],
+            "sha256": "a7a6229da8225bbf2b76b3d1f3af35920dfba8f552a56b5d5f8dba64bc93c851"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/1085.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/val/GT/1074.jpg"
+            ],
+            "sha256": "a7a6229da8225bbf2b76b3d1f3af35920dfba8f552a56b5d5f8dba64bc93c851"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/2683.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/val/GT/2648.jpg"
+            ],
+            "sha256": "61a6acd48bb85d0e12f4cefd689edb5f9f2298cc0529018ee6662b01c699dfbf"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/LSUI/test/GT/820.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/LSUI/val/GT/1191.jpg"
+            ],
+            "sha256": "dbcca98c8d931629ce70176dd0a3b66147770e74dfa239101ca84c6d11875e2e"
+          }
+        ]
+      },
+      "identical_paired_samples": [
+        "2683",
+        "820"
+      ]
+    },
+    {
+      "dataset": "UFO",
+      "splits": [
+        "train",
+        "val"
+      ],
+      "input": {
+        "n_heldout_files": 1,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/val/input/set_f384.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/train/input/set_u324.jpg"
+            ],
+            "sha256": "95e538cacb71a2e49670254455377531ce3a92a9384ea2a6f284f5719058ed21"
+          }
+        ]
+      },
+      "GT": {
+        "n_heldout_files": 1,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/val/GT/set_f384.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/train/GT/set_u324.jpg"
+            ],
+            "sha256": "8209b1d7d17363918d5efa548573a1a310a4c04cb984cedaa8ccc565909e7dd8"
+          }
+        ]
+      },
+      "identical_paired_samples": [
+        "set_f384"
+      ]
+    },
+    {
+      "dataset": "UFO",
+      "splits": [
+        "train",
+        "test"
+      ],
+      "input": {
+        "n_heldout_files": 3,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/input/set_o10.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/train/input/set_u256.jpg"
+            ],
+            "sha256": "9c41f800fda61c2f150a83b3da634f050bc1b695c5441c7ce5fd407118f01240"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/input/set_o27.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/train/input/set_o419.jpg"
+            ],
+            "sha256": "4b2e56841060d347249dd5ea7ce6c90c38fad802274ae64aa25a434421ee9956"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/input/set_o4.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/train/input/set_f216.jpg"
+            ],
+            "sha256": "15b5ce82c01f70a0ab97217c932ad774fe2867c6bb2d2989b37ed6f3ce90ea01"
+          }
+        ]
+      },
+      "GT": {
+        "n_heldout_files": 3,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/GT/set_o10.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/train/GT/set_u256.jpg"
+            ],
+            "sha256": "ab3e5efc85c9880ed740ed03dde6a1cc4aa369982972ed65d2a11f05f3711470"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/GT/set_o27.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/train/GT/set_o419.jpg"
+            ],
+            "sha256": "1b3b28773d5cc1ce2b7f90be7aa70d91b0485dbc205077be1da9ee0ccd25ff51"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/GT/set_o4.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/train/GT/set_f216.jpg"
+            ],
+            "sha256": "db15e06eb01865260d1a7c8e7950b03ea774f52920cf4c459b039f7da69ae743"
+          }
+        ]
+      },
+      "identical_paired_samples": [
+        "set_o10",
+        "set_o27",
+        "set_o4"
+      ]
+    },
+    {
+      "dataset": "UFO",
+      "splits": [
+        "val",
+        "test"
+      ],
+      "input": {
+        "n_heldout_files": 2,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/input/set_f9.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/val/input/set_o244.jpg"
+            ],
+            "sha256": "db1eced71fbfd4e119dc87b3149818f9caa483a992a4a6315151e1c2f8961b0c"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/input/set_o21.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/val/input/set_u360.jpg"
+            ],
+            "sha256": "afb2de450f7a0519ee891923f5032e8ab2df08ec32c768d2eefc78f6e5f3b91d"
+          }
+        ]
+      },
+      "GT": {
+        "n_heldout_files": 2,
+        "matches": [
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/GT/set_f9.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/val/GT/set_o244.jpg"
+            ],
+            "sha256": "3456c764e7f9e7b8f419ba65a0f0e5fadd08e5dc86c1aa565bc6965e4ce7e391"
+          },
+          {
+            "heldout": "/home/user/UnderWaterDataset/UFO/test/GT/set_o21.jpg",
+            "train_or_other": [
+              "/home/user/UnderWaterDataset/UFO/val/GT/set_u360.jpg"
+            ],
+            "sha256": "b2f6340a040f7e9f33b7c623cd0070e5785147a2bd42a68028720a638614367b"
+          }
+        ]
+      },
+      "identical_paired_samples": [
+        "set_f9",
+        "set_o21"
+      ]
+    }
+  ],
+  "caveat": "Exact byte hashes only. Equal references alone do not prove identical input or checkpoint training contamination. Sequence/perceptual duplicates need separate audit."
+}

@@ -33,31 +33,51 @@ def _load(path):
 
 
 def t1_baselines():
+    """Read the baseline artifacts.
+
+    The aggregation lives under ``aggregate`` (with the per-image rows under
+    ``rows``) and the headline SSIM is the protocol's skimage win_size=5 value,
+    with ``ssim_frozen11`` kept beside it as a sensitivity check.  Reading
+    ``d["psnr"]`` off the top level silently produced a table of zeros and dashes
+    next to artifacts that did contain the numbers, which is the worst kind of
+    wrong: it looks like the runs failed.
+    """
     rows = []
     for p in sorted(glob.glob(os.path.join(ROOT, "artifacts", "baseline_*.json"))):
         d = _load(p)
         if not d:
             continue
+        agg = d.get("aggregate") or {}
         rows.append({
             "method": d.get("method", os.path.basename(p)),
             "dataset": d.get("dataset", "?"),
-            "n": d.get("n", 0),
-            "psnr": d.get("psnr"),
-            "ssim": d.get("ssim"),
-            "ssim_win5": d.get("ssim_win5"),
-            "source": d.get("source", "official_weights_rerun"),
+            "n": d.get("n_scored") or agg.get("n") or 0,
+            "psnr": agg.get("psnr"),
+            "ssim": agg.get("ssim"),
+            "ssim_win5": agg.get("ssim"),
+            "ssim_frozen11": agg.get("ssim_frozen11"),
+            "source": d.get("status", "official_weights_rerun"),
         })
     return rows
 
 
 def t3_h1():
+    """Read the H1 artifact.
+
+    H1 writes a ``table`` keyed by target with per-column Spearman values, not a
+    ``targets`` list, so the earlier reader found nothing and printed "no H1
+    artifacts yet" for a file that was sitting right there.
+    """
     rows = []
     for p in sorted(glob.glob(os.path.join(ROOT, "artifacts", "h1_error_form_*.json"))):
         d = _load(p)
         if not d:
             continue
-        for tgt, v in (d.get("targets") or {}).items():
-            rows.append({"dataset": d.get("dataset", "?"), "target": tgt, **v})
+        table = d.get("table") or d.get("targets") or {}
+        for tgt, v in table.items():
+            if isinstance(v, dict):
+                rows.append({"dataset": d.get("dataset", "UIEB"),
+                             "target": tgt, **v})
     return rows
 
 

@@ -167,16 +167,11 @@ def colour_budget(
     b = np.broadcast_to(wm.b_inf.reshape(1, 3), (N, 3))
     d1 = np.asarray(d, dtype=np.float64).reshape(-1)
 
-    # upper bound: any channel whose signal-above-veiling would exceed the range
-    signal = J3 - b
-    pos = signal > 1e-9
-    per = np.full((N, 3), np.inf)
-    per[pos] = (np.log(np.maximum((1.0 - b[pos]) / signal[pos], 1.0))
-                / beta[pos])
-    dd_pos_max = float(per.min()) if np.isfinite(per).any() else 0.0
-
-    # lower bound: optical depth cannot go negative anywhere
-    dd_neg_min = float(-d1.min())
+    # Share the single checked range implementation; negative J-b hits the
+    # radiance floor at a POSITIVE step and cannot be omitted here.
+    dd_neg_min, dd_pos_max = admissible_range(J3, d1, wm)
+    if dd_neg_min > dd_pos_max:
+        raise ValueError("empty admissible depth interval")
 
     dd_use = float(np.clip(dd, dd_neg_min, dd_pos_max))
 
@@ -287,28 +282,27 @@ def admissible_range(J: np.ndarray, d: np.ndarray, wm: WaterModel) -> Tuple[floa
     plus ``J'_c >= 0``.  ``beta_c (d + dd) <= TAU_MAX`` is folded into ``hi`` too.
     """
     J3 = np.asarray(J, dtype=np.float64).reshape(-1, 3)
-    b = wm.b_inf.reshape(1, 3)
-    beta = wm.beta.reshape(1, 3)
+    b = np.broadcast_to(wm.b_inf.reshape(1, 3), J3.shape)
+    beta = np.broadcast_to(wm.beta.reshape(1, 3), J3.shape)
     d1 = np.asarray(d, dtype=np.float64).reshape(-1)
+    if J3.size == 0 or d1.size not in (1, J3.shape[0]):
+        raise ValueError("nonempty J and compatible depth are required")
+    if (not np.isfinite(J3).all() or not np.isfinite(d1).all()
+            or not np.isfinite(beta).all() or not np.isfinite(b).all()
+            or (beta <= 0).any() or (b < 0).any() or (b > 1).any()
+            or (J3 < 0).any() or (J3 > 1).any()):
+        raise ValueError("range derivation requires finite J,b in [0,1], beta>0")
     sig = J3 - b
-    hi = np.inf
-    pos = sig > 1e-9
-    if pos.any():
-        # J'_c = b_c + (J_c - b_c) u <= 1  ->  u <= (1 - b_c) / (J_c - b_c)
-        ratio = np.where(pos, (1.0 - b) / np.where(pos, sig, 1.0), np.inf)
-        u_max = float(np.min(ratio))
-        if u_max > 0 and np.isfinite(u_max):
-            hi = float(np.log(u_max) / float(beta.max()))
-    lo = float(-d1.min()) if d1.size else 0.0
-    # reflectance floor: b_c + (J_c - b_c) u >= 0 -> u >= -b_c / (J_c - b_c)
-    neg = sig < -1e-9
-    if neg.any():
-        u_min = np.max(-b / np.where(neg, sig, -np.inf))
-        if np.isfinite(u_min) and u_min > 0:
-            lo = max(lo, float(-np.log(u_min) / beta.min()))
-    # water model validity
-    if d1.size:
-        hi = min(hi, float(TAU_MAX / beta.max() - d1.min()))
+    upper = np.full(J3.shape, np.inf)
+    pos = sig > 0.0
+    neg = sig < 0.0
+    # Positive signal hits J'=1; negative signal hits J'=0. BOTH constrain
+    # the positive step. Bounds are divided by each channel's own beta.
+    upper[pos] = np.log((1.0 - b[pos]) / sig[pos]) / beta[pos]
+    upper[neg] = np.log(b[neg] / (-sig[neg])) / beta[neg]
+    lo = float(-d1.min())
+    # Every pixel/channel must obey tau<=TAU_MAX, hence MAX depth, not MIN.
+    hi = min(float(upper.min()), float(TAU_MAX / beta.max() - d1.max()))
     return lo, hi
 
 
@@ -394,59 +388,102 @@ def best_step(
 
 
 def family_spread(
+    Jhat: np.ndarray,
     Jstar: np.ndarray,
     wm: WaterModel,
     d_ref: np.ndarray | None = None,
-    n_grid: int = 96,
+    dd_lo: float = -0.8,
+    dd_hi: float = 0.8,
+    n_grid: int = 161,
 ) -> Dict[str, float]:
-    """Range of PSNR a *perfect* reconstruction could show, purely from gauge freedom.
+    """Oracle PSNR range over one method-output colour orbit.
 
-    Every member of the family renders the identical observation, so a method that
-    lands anywhere in this range is indistinguishable *by the data*.  The spread in
-    dB is therefore the width of the band inside which PSNR cannot rank methods on
-    colour.  Computed in closed form: the extremes of a quadratic over a
-    physically clipped interval.
+    Interpretation correction (2026-11-05): this function never reads the actual
+    observation. A baseline output and parameter pair must independently fit that
+    observation before a conditional symmetry can be interpreted physically.
+    Searching one orbit is neither the full feasible set nor a bound on all
+    restoration mechanisms. Reference-selected steps are not free information.
+    The historical description below is superseded wherever it implies otherwise.
+
+    Historical description: How many dB a method's output could gain by moving *only* inside the gauge family.
+
+    The earlier version of this function anchored the sweep on the reference image,
+    which made ``dd = 0`` reproduce the reference exactly: MSE = 0, PSNR = 99 dB, and
+    a "spread" of 99 dB that measured nothing but the fact that the reference is
+    consistent with itself.  It also returned two different key sets depending on
+    whether it took an early exit, which is how the bug surfaced (a `KeyError:
+    'dd_lo'` in `gauge_pairwise.py`).
+
+    The question worth asking is a different one.  Take a *method's* output
+    ``Jhat``.  Every member of the family renders the same observation, so moving
+    ``Jhat`` along the family is free of observational cost -- it is a choice of
+    scene prior, not a use of information.  What that choice is *worth* in PSNR
+    against the reference is the band reported here:
+
+    * ``psnr_at_zero`` -- what the method actually scored (``dd = 0``).
+    * ``psnr_best`` / ``psnr_worst`` -- the extremes reachable inside the family.
+    * ``psnr_spread`` -- ``psnr_best - psnr_worst``: the width of the band inside
+      which the observation alone cannot rank two colour predictions.
+
+    ``dd_best`` is the step that an oracle holding the reference would pick.  The
+    gain ``psnr_best - psnr_at_zero`` is therefore an *upper bound on luck*: it is
+    how much PSNR a method could win without using any information the observation
+    does not contain.  A method whose colour gain is smaller than that bound has
+    not demonstrated that it measured anything.
+
+    All keys are returned on every path, including the degenerate ones, so callers
+    never have to guess which shape they got.
     """
-    J = np.asarray(Jstar, dtype=np.float64).reshape(-1, 3)
+    A = np.asarray(Jhat, dtype=np.float64).reshape(-1, 3)
+    G = np.asarray(Jstar, dtype=np.float64).reshape(-1, 3)
     b = wm.b_inf.reshape(1, 3)
-    s = J - b
-    s_nn = (s * s).sum(axis=0)
-    N = J.shape[0]
-    if N == 0:
-        return {"psnr_spread": 0.0, "n_members": 0}
+    beta = wm.beta.reshape(1, 3)
+    N = A.shape[0]
 
-    lo, hi = (-0.5, 0.5)
-    if d_ref is not None:
-        lo, hi = admissible_range(J, d_ref, wm)
-    lo = max(lo, -0.5)
-    hi = min(hi, 0.5)
-    if not np.isfinite(lo):
-        lo = -0.5
-    if not np.isfinite(hi):
-        hi = 0.5
-    if hi <= lo:
-        return {"psnr_spread": 0.0, "n_members": 0, "lo": lo, "hi": hi}
-
-    best_mse, worst_mse = np.inf, 0.0
-    n_ok = 0
-    # The family-of-one-step sweep is cheap here because it is one image, not a
-    # pairwise matrix; a coarse grid plus the analytic optimum is enough to bound
-    # the spread without overselling its precision.
-    for dd in np.linspace(lo, hi, n_grid):
-        u = np.exp(wm.beta.reshape(1, 3) * dd)
-        mse = float((((u - 1.0) ** 2) * s_nn).sum() / (3.0 * N))
-        n_ok += 1
-        best_mse = min(best_mse, mse)
-        worst_mse = max(worst_mse, mse)
-    best_mse = max(best_mse, 0.0)
-    worst_mse = max(worst_mse, 0.0)
-    psnr_best = 99.0 if best_mse <= 1e-12 else 10.0 * np.log10(1.0 / best_mse)
-    psnr_worst = 99.0 if worst_mse <= 1e-12 else 10.0 * np.log10(1.0 / worst_mse)
-    return {
-        "psnr_spread": float(max(0.0, psnr_best - psnr_worst)),
-        "psnr_best": float(psnr_best),
-        "psnr_worst": float(psnr_worst),
-        "dd_lo": float(lo),
-        "dd_hi": float(hi),
-        "n_members": n_ok,
+    out = {
+        "psnr_at_zero": 0.0, "psnr_best": 0.0, "psnr_worst": 0.0,
+        "psnr_spread": 0.0, "psnr_gain_max": 0.0, "dd_best": 0.0,
+        "dd_lo": float(dd_lo), "dd_hi": float(dd_hi), "n_members": 0,
     }
+    if N == 0:
+        return out
+
+    lo, hi = float(dd_lo), float(dd_hi)
+    if d_ref is not None:
+        a_lo, a_hi = admissible_range(A, d_ref, wm)
+        if np.isfinite(a_lo):
+            lo = max(lo, float(a_lo))
+        if np.isfinite(a_hi):
+            hi = min(hi, float(a_hi))
+    out["dd_lo"], out["dd_hi"] = lo, hi
+    if not np.isfinite(lo) or not np.isfinite(hi) or hi <= lo:
+        return out
+
+    # A moves along the family; G is fixed.  MSE(dd) is a smooth function of
+    # exp(beta*dd), so a fine grid plus the analytic best step is enough to bound
+    # the band for a single image.
+    grid = np.linspace(lo, hi, n_grid)
+    if lo <= 0.0 <= hi:
+        grid = np.unique(np.r_[grid, 0.0])
+    psnrs = np.empty(grid.size, dtype=np.float64)
+    for i, dd in enumerate(grid):
+        Jp = b + (A - b) * np.exp(beta * dd)
+        mse = float(((Jp - G) ** 2).sum() / (3.0 * N))
+        psnrs[i] = 99.0 if mse <= 1e-12 else 10.0 * np.log10(1.0 / mse)
+
+    k = int(np.argmax(psnrs))
+    best_q = float(psnrs[k])
+    worst_q = float(psnrs.min())
+    # Evaluate the unchanged method exactly, not at the nearest grid point.
+    mse_zero = float(np.mean((A - G) ** 2))
+    at_zero = 99.0 if mse_zero <= 1e-12 else float(10.0 * np.log10(1.0 / mse_zero))
+    out.update({
+        "psnr_at_zero": at_zero,
+        "psnr_best": best_q,
+        "psnr_worst": worst_q,
+        "psnr_spread": float(max(0.0, best_q - worst_q)),
+        "psnr_gain_max": float(max(0.0, best_q - at_zero)),
+        "dd_best": float(grid[k]),
+        "n_members": int(grid.size),
+    })
+    return out

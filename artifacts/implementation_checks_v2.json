@@ -1,0 +1,74 @@
+{
+  "checks": [
+    {
+      "shape": [
+        4,
+        7
+      ],
+      "oracle": false,
+      "cost_error": 4.930380657631324e-32
+    },
+    {
+      "shape": [
+        4,
+        7
+      ],
+      "oracle": true,
+      "cost_error": 1.7763568394002505e-15
+    },
+    {
+      "shape": [
+        4,
+        7
+      ],
+      "chroma_roundtrip_max_error": 3.3306690738754696e-16
+    },
+    {
+      "shape": [
+        17,
+        19
+      ],
+      "oracle": false,
+      "cost_error": 5.17689969051289e-31
+    },
+    {
+      "shape": [
+        17,
+        19
+      ],
+      "oracle": true,
+      "cost_error": 7.105427357601002e-14
+    },
+    {
+      "shape": [
+        17,
+        19
+      ],
+      "chroma_roundtrip_max_error": 3.3306690738754696e-16
+    },
+    {
+      "shape": [
+        31,
+        23
+      ],
+      "oracle": false,
+      "cost_error": 1.5653958587979453e-30
+    },
+    {
+      "shape": [
+        31,
+        23
+      ],
+      "oracle": true,
+      "cost_error": 5.684341886080802e-14
+    },
+    {
+      "shape": [
+        31,
+        23
+      ],
+      "chroma_roundtrip_max_error": 5.551115123125783e-16
+    }
+  ],
+  "status": "passed"
+}

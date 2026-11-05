@@ -1,24 +1,23 @@
-"""Absolute error is the wrong target: it scales with the signal, not with support.
+"""Block-level association between observation support and restoration error.
 
-The 40-image run gives ``rho(q_eff, |Jh-J*|) = +0.18`` at region level, stable
-under partialling out change magnitude, optical depth, brightness and gradient
-energy.  Taken at face value that *refutes* H1: high support would go with high
-error.
+Reports, for each error form, the raw Spearman correlation with the support
+statistic ``lq`` and the partial correlation once forward statistics are
+controlled:
 
-It does not, and the reason is a property of the metric rather than of the
-physics.  ``|Jh - J*|`` is an absolute difference, so it is small wherever the
-scene is dark, and dark is exactly where the observation carries least
-information.  An enhancer can be 50 % wrong in a shadow and still contribute
-almost nothing to the absolute error.  So the quantity that has to be predicted
-is the *relative* deviation, and the one this project actually cares about is the
-chromatic part of it: unsupported colour, not unsupported photons.
-
-This script separates the three:
     abs   |Jh - J*|                       (dominated by signal level)
     rel   |Jh - J*| / (J* + 0.05)         (scale free)
     chr   |chroma(Jh) - chroma(J*)|       (hue/saturation, log-opponent)
     lum   |luma(Jh) - luma(J*)|           (structure + exposure)
-and repeats the partial-correlation control for each.
+
+Two readings are possible and this script does not choose between them by
+itself: a positive partial correlation means high support goes with high error
+(the opposite of the intuition behind the method), and a correlation that
+vanishes under controls means the statistic carries no independent information
+about error.  Report the numbers; do not narrate them into a rescue.
+
+The 2026-11-04 artifact was produced before the ``direction_info`` gain bug was
+fixed, so its support features were wrong by ``gain**2``.  The corrected run is
+``artifacts/h1_error_form_v2.json``.
 """
 from __future__ import annotations
 

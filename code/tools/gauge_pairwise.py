@@ -77,26 +77,48 @@ def main():
         pred = pred[:, None]
     print(f"npz={args.npz} n={n} methods={methods}", flush=True)
 
-    # 1) How wide is the band inside which PSNR cannot rank methods on colour?
+    # 1) How many dB could a method win by moving ONLY inside the gauge family?
+    #
+    # The anchor is the method's own output, not the reference.  The family is a set
+    # of scenes that all render the SAME observation, so sliding a prediction along
+    # it costs nothing in consistency: it is a choice of prior, not a use of
+    # information.  ``psnr_gain_max`` is therefore an upper bound on PSNR that is
+    # available for free -- a method gaining less than this has not shown that its
+    # colour came from measurement.
     fam = []
     for i in range(n):
         gt = GT[i].astype(np.float64) / 255.0
         raw = RAW[i].astype(np.float64) / 255.0
-        # Anchor the family at the observation: solve the water of the degraded
-        # frame so the depth map is a real one, not invented.
-        fit = S.fit_water(raw, gt, gt.shape[0], gt.shape[1], k_depth=9)
-        sp = G.family_spread(gt, wm, d_ref=fit["depth"])
-        sp["name"] = names[i]
-        fam.append(sp)
+        fit = S.fit_water(raw, gt, gt.shape[0], gt.shape[1], k_depth=9,
+                          noise_mode="misfit")
+        for mi, mname in enumerate(methods):
+            jhat = pred[i, mi].astype(np.float64) / 255.0
+            sp = G.family_spread(jhat, gt, wm, d_ref=fit["depth"])
+            sp["name"] = names[i]
+            sp["method"] = mname
+            fam.append(sp)
         if (i + 1) % 20 == 0 or i == n - 1:
-            print(f"  family [{i+1}/{n}] spread={sp['psnr_spread']:.2f} dB "
-                  f"dd=[{sp['dd_lo']:+.2f},{sp['dd_hi']:+.2f}]", flush=True)
+            print("  family [%d/%d] " % (i + 1, n) + " | ".join(
+                "%s free=%+.2f dB band=%.2f" %
+                (f["method"], f["psnr_gain_max"], f["psnr_spread"])
+                for f in fam[-len(methods):]), flush=True)
+
+    gain_arr = np.array([f["psnr_gain_max"] for f in fam])
+    band_arr = np.array([f["psnr_spread"] for f in fam])
+    print("")
+    print("[gauge family per method output]  n=%d" % len(gain_arr))
+    print("  PSNR available free inside the family (dB): mean=%.2f median=%.2f "
+          "p90=%.2f max=%.2f" % (gain_arr.mean(), _q(gain_arr, 50),
+                                 _q(gain_arr, 90), gain_arr.max()))
+    print("  band where the observation cannot rank colour (dB): mean=%.2f "
+          "median=%.2f p90=%.2f" % (band_arr.mean(), _q(band_arr, 50),
+                                    _q(band_arr, 90)))
 
     sp_arr = np.array([f["psnr_spread"] for f in fam])
-    print(f"\n[gauge family of the reference]  n={len(sp_arr)}")
-    print(f"  PSNR spread (dB): mean={sp_arr.mean():.2f} "
-          f"median={_q(sp_arr,50):.2f} p90={_q(sp_arr,90):.2f} "
-          f"max={sp_arr.max():.2f}")
+    print("")
+    print("[gauge band, method outputs]  n=%d" % len(sp_arr))
+    print("  spread (dB): mean=%.2f median=%.2f p90=%.2f max=%.2f"
+          % (sp_arr.mean(), _q(sp_arr, 50), _q(sp_arr, 90), sp_arr.max()))
 
     # 2) Pairwise unfalsifiability, closed form
     rows = []
@@ -126,10 +148,15 @@ def main():
     with open(args.out, "w", encoding="utf-8") as fh:
         json.dump({"npz": args.npz, "n": n, "methods": methods,
                    "family": fam, "pairs": rows,
-                   "family_summary": {"psnr_spread_mean": float(sp_arr.mean()),
-                                      "psnr_spread_median": _q(sp_arr, 50),
-                                      "psnr_spread_p90": _q(sp_arr, 90),
-                                      "psnr_spread_max": float(sp_arr.max())}},
+                   "family_summary": {
+                       "psnr_gain_max_mean": float(gain_arr.mean()),
+                       "psnr_gain_max_median": _q(gain_arr, 50),
+                       "psnr_gain_max_p90": _q(gain_arr, 90),
+                       "psnr_gain_max_max": float(gain_arr.max()),
+                       "band_mean": float(band_arr.mean()),
+                       "band_median": _q(band_arr, 50),
+                       "band_p90": _q(band_arr, 90),
+                   }},
                   fh, indent=1)
     print(f"\nwrote {args.out}")
     return 0
