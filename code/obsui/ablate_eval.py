@@ -67,7 +67,10 @@ def aggregate(rows: Sequence[Dict[str, float]]) -> Dict[str, float]:
 # --------------------------------------------------------------------------- #
 def to_tensor(u8: np.ndarray) -> torch.Tensor:
     """HxWx3 uint8 -> 1x3xHxW float in [0, 1] (the backbone's input convention)."""
-    x = torch.from_numpy(np.ascontiguousarray(u8)).float().div_(255.0)
+    # ``np.array(..., copy=True)`` rather than ``ascontiguousarray``: the latter
+    # returns the same read-only array when it is already contiguous, and torch
+    # then warns that writes to it are undefined behaviour.
+    x = torch.from_numpy(np.array(u8, dtype=np.uint8, copy=True)).float().div_(255.0)
     return x.permute(2, 0, 1).unsqueeze(0)
 
 
