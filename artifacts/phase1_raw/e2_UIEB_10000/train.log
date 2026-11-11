@@ -1,0 +1,151 @@
+[e2_UIEB_10000] backbone=2244946 new=184192 arm=e2
+[e2_UIEB_10000] val pairs=89
+[e2_UIEB_10000] val n=89 PSNR=23.8255 SSIM=0.912363
+[e2_UIEB_10000] start test n=89 PSNR=24.4604 SSIM=0.921924
+/home/user/obsui/code/obsui/ablate_eval.py:70: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:206.)
+  x = torch.from_numpy(np.ascontiguousarray(u8)).float().div_(255.0)
+[e2_UIEB_10000] upd 0/10000 loss=0.0975 lr=3.33e-08 3.31s
+[e2_UIEB_10000] upd 100/10000 loss=0.1031 lr=3.37e-06 1.11s
+[e2_UIEB_10000] upd 200/10000 loss=0.0899 lr=6.70e-06 1.18s
+[e2_UIEB_10000] upd 300/10000 loss=0.0912 lr=1.00e-05 1.00s
+[e2_UIEB_10000] upd 400/10000 loss=0.0882 lr=1.00e-05 1.44s
+[e2_UIEB_10000] val n=89 PSNR=23.7116 SSIM=0.911456
+[e2_UIEB_10000] upd 500: score=32.8262 best=32.9492 
+[e2_UIEB_10000] upd 500/10000 loss=0.1082 lr=9.99e-06 0.75s
+[e2_UIEB_10000] upd 600/10000 loss=0.0889 lr=9.98e-06 1.21s
+[e2_UIEB_10000] upd 700/10000 loss=0.0925 lr=9.96e-06 1.19s
+[e2_UIEB_10000] upd 800/10000 loss=0.0970 lr=9.94e-06 1.25s
+[e2_UIEB_10000] upd 900/10000 loss=0.0886 lr=9.92e-06 1.15s
+[e2_UIEB_10000] val n=89 PSNR=23.6211 SSIM=0.910845
+[e2_UIEB_10000] upd 1000: score=32.7296 best=32.9492 
+[e2_UIEB_10000] upd 1000/10000 loss=0.0928 lr=9.88e-06 0.87s
+[e2_UIEB_10000] upd 1100/10000 loss=0.1107 lr=9.85e-06 1.16s
+[e2_UIEB_10000] upd 1200/10000 loss=0.0829 lr=9.81e-06 1.22s
+[e2_UIEB_10000] upd 1300/10000 loss=0.0944 lr=9.77e-06 1.18s
+[e2_UIEB_10000] upd 1400/10000 loss=0.1239 lr=9.72e-06 1.08s
+[e2_UIEB_10000] val n=89 PSNR=23.5443 SSIM=0.909848
+[e2_UIEB_10000] upd 1500: score=32.6428 best=32.9492 
+[e2_UIEB_10000] upd 1500/10000 loss=0.0883 lr=9.66e-06 0.76s
+[e2_UIEB_10000] upd 1600/10000 loss=0.1010 lr=9.61e-06 1.10s
+[e2_UIEB_10000] upd 1700/10000 loss=0.0865 lr=9.55e-06 1.50s
+[e2_UIEB_10000] upd 1800/10000 loss=0.0876 lr=9.48e-06 1.28s
+[e2_UIEB_10000] upd 1900/10000 loss=0.0773 lr=9.41e-06 1.22s
+[e2_UIEB_10000] val n=89 PSNR=23.5842 SSIM=0.909653
+[e2_UIEB_10000] upd 2000: score=32.6808 best=32.9492 
+[e2_UIEB_10000] upd 2000/10000 loss=0.0800 lr=9.33e-06 0.66s
+[e2_UIEB_10000] upd 2100/10000 loss=0.0904 lr=9.26e-06 0.93s
+[e2_UIEB_10000] upd 2200/10000 loss=0.0828 lr=9.17e-06 1.05s
+[e2_UIEB_10000] upd 2300/10000 loss=0.0703 lr=9.09e-06 1.04s
+[e2_UIEB_10000] upd 2400/10000 loss=0.0756 lr=9.00e-06 0.99s
+[e2_UIEB_10000] val n=89 PSNR=23.4156 SSIM=0.908990
+[e2_UIEB_10000] upd 2500: score=32.5055 best=32.9492 
+[e2_UIEB_10000] upd 2500/10000 loss=0.0768 lr=8.91e-06 0.64s
+[e2_UIEB_10000] upd 2600/10000 loss=0.0870 lr=8.81e-06 1.20s
+[e2_UIEB_10000] upd 2700/10000 loss=0.0795 lr=8.71e-06 1.48s
+[e2_UIEB_10000] upd 2800/10000 loss=0.0974 lr=8.60e-06 1.16s
+[e2_UIEB_10000] upd 2900/10000 loss=0.1011 lr=8.50e-06 0.97s
+[e2_UIEB_10000] val n=89 PSNR=23.4400 SSIM=0.909310
+[e2_UIEB_10000] upd 3000: score=32.5331 best=32.9492 
+[e2_UIEB_10000] upd 3000/10000 loss=0.0890 lr=8.39e-06 0.68s
+[e2_UIEB_10000] upd 3100/10000 loss=0.0823 lr=8.27e-06 1.11s
+[e2_UIEB_10000] upd 3200/10000 loss=0.0775 lr=8.16e-06 1.24s
+[e2_UIEB_10000] upd 3300/10000 loss=0.0746 lr=8.04e-06 1.19s
+[e2_UIEB_10000] upd 3400/10000 loss=0.0900 lr=7.92e-06 1.23s
+[e2_UIEB_10000] val n=89 PSNR=23.3755 SSIM=0.907952
+[e2_UIEB_10000] upd 3500: score=32.4551 best=32.9492 
+[e2_UIEB_10000] upd 3500/10000 loss=0.0850 lr=7.79e-06 0.71s
+[e2_UIEB_10000] upd 3600/10000 loss=0.0616 lr=7.67e-06 1.26s
+[e2_UIEB_10000] upd 3700/10000 loss=0.0769 lr=7.54e-06 1.30s
+[e2_UIEB_10000] upd 3800/10000 loss=0.0900 lr=7.41e-06 1.08s
+[e2_UIEB_10000] upd 3900/10000 loss=0.0859 lr=7.27e-06 1.19s
+[e2_UIEB_10000] val n=89 PSNR=23.2591 SSIM=0.907408
+[e2_UIEB_10000] upd 4000: score=32.3331 best=32.9492 
+[e2_UIEB_10000] upd 4000/10000 loss=0.0850 lr=7.14e-06 0.60s
+[e2_UIEB_10000] upd 4100/10000 loss=0.0754 lr=7.00e-06 0.92s
+[e2_UIEB_10000] upd 4200/10000 loss=0.0811 lr=6.86e-06 1.01s
+[e2_UIEB_10000] upd 4300/10000 loss=0.0780 lr=6.72e-06 1.38s
+[e2_UIEB_10000] upd 4400/10000 loss=0.0787 lr=6.58e-06 1.21s
+[e2_UIEB_10000] val n=89 PSNR=23.3415 SSIM=0.907558
+[e2_UIEB_10000] upd 4500: score=32.4171 best=32.9492 
+[e2_UIEB_10000] upd 4500/10000 loss=0.0754 lr=6.44e-06 0.79s
+[e2_UIEB_10000] upd 4600/10000 loss=0.0686 lr=6.30e-06 1.11s
+[e2_UIEB_10000] upd 4700/10000 loss=0.0831 lr=6.15e-06 1.21s
+[e2_UIEB_10000] upd 4800/10000 loss=0.0807 lr=6.01e-06 1.05s
+[e2_UIEB_10000] upd 4900/10000 loss=0.0873 lr=5.86e-06 1.08s
+[e2_UIEB_10000] val n=89 PSNR=23.2684 SSIM=0.907722
+[e2_UIEB_10000] upd 5000: score=32.3456 best=32.9492 
+[e2_UIEB_10000] upd 5000/10000 loss=0.0984 lr=5.72e-06 0.76s
+[e2_UIEB_10000] upd 5100/10000 loss=0.0881 lr=5.57e-06 1.03s
+[e2_UIEB_10000] upd 5200/10000 loss=0.0624 lr=5.43e-06 1.20s
+[e2_UIEB_10000] upd 5300/10000 loss=0.1042 lr=5.28e-06 1.15s
+[e2_UIEB_10000] upd 5400/10000 loss=0.0798 lr=5.14e-06 1.52s
+[e2_UIEB_10000] val n=89 PSNR=23.2578 SSIM=0.907538
+[e2_UIEB_10000] upd 5500: score=32.3332 best=32.9492 
+[e2_UIEB_10000] upd 5500/10000 loss=0.0819 lr=4.99e-06 0.64s
+[e2_UIEB_10000] upd 5600/10000 loss=0.0882 lr=4.85e-06 1.26s
+[e2_UIEB_10000] upd 5700/10000 loss=0.1056 lr=4.70e-06 1.51s
+[e2_UIEB_10000] upd 5800/10000 loss=0.0655 lr=4.56e-06 1.18s
+[e2_UIEB_10000] upd 5900/10000 loss=0.0880 lr=4.42e-06 0.93s
+[e2_UIEB_10000] val n=89 PSNR=23.2260 SSIM=0.907260
+[e2_UIEB_10000] upd 6000: score=32.2986 best=32.9492 
+[e2_UIEB_10000] upd 6000/10000 loss=0.0779 lr=4.28e-06 0.63s
+[e2_UIEB_10000] upd 6100/10000 loss=0.0610 lr=4.14e-06 2.41s
+[e2_UIEB_10000] upd 6200/10000 loss=0.0963 lr=4.00e-06 1.28s
+[e2_UIEB_10000] upd 6300/10000 loss=0.0688 lr=3.86e-06 1.09s
+[e2_UIEB_10000] upd 6400/10000 loss=0.0758 lr=3.73e-06 1.00s
+[e2_UIEB_10000] val n=89 PSNR=23.1584 SSIM=0.907165
+[e2_UIEB_10000] upd 6500: score=32.2301 best=32.9492 
+[e2_UIEB_10000] upd 6500/10000 loss=0.0806 lr=3.59e-06 0.63s
+[e2_UIEB_10000] upd 6600/10000 loss=0.0877 lr=3.46e-06 1.17s
+[e2_UIEB_10000] upd 6700/10000 loss=0.0760 lr=3.33e-06 1.04s
+[e2_UIEB_10000] upd 6800/10000 loss=0.0890 lr=3.21e-06 0.98s
+[e2_UIEB_10000] upd 6900/10000 loss=0.0833 lr=3.08e-06 1.20s
+[e2_UIEB_10000] val n=89 PSNR=23.1515 SSIM=0.907038
+[e2_UIEB_10000] upd 7000: score=32.2219 best=32.9492 
+[e2_UIEB_10000] upd 7000/10000 loss=0.0775 lr=2.96e-06 0.75s
+[e2_UIEB_10000] upd 7100/10000 loss=0.0599 lr=2.84e-06 1.25s
+[e2_UIEB_10000] upd 7200/10000 loss=0.0788 lr=2.73e-06 0.98s
+[e2_UIEB_10000] upd 7300/10000 loss=0.0835 lr=2.61e-06 1.15s
+[e2_UIEB_10000] upd 7400/10000 loss=0.0649 lr=2.50e-06 1.28s
+[e2_UIEB_10000] val n=89 PSNR=23.1462 SSIM=0.907165
+[e2_UIEB_10000] upd 7500: score=32.2178 best=32.9492 
+[e2_UIEB_10000] upd 7500/10000 loss=0.0840 lr=2.40e-06 0.64s
+[e2_UIEB_10000] upd 7600/10000 loss=0.0917 lr=2.29e-06 1.17s
+[e2_UIEB_10000] upd 7700/10000 loss=0.0688 lr=2.19e-06 1.16s
+[e2_UIEB_10000] upd 7800/10000 loss=0.0987 lr=2.09e-06 1.02s
+[e2_UIEB_10000] upd 7900/10000 loss=0.0740 lr=2.00e-06 0.92s
+[e2_UIEB_10000] val n=89 PSNR=23.1157 SSIM=0.907162
+[e2_UIEB_10000] upd 8000: score=32.1873 best=32.9492 
+[e2_UIEB_10000] upd 8000/10000 loss=0.0693 lr=1.91e-06 0.84s
+[e2_UIEB_10000] upd 8100/10000 loss=0.1035 lr=1.83e-06 1.12s
+[e2_UIEB_10000] upd 8200/10000 loss=0.0795 lr=1.74e-06 1.09s
+[e2_UIEB_10000] upd 8300/10000 loss=0.0942 lr=1.67e-06 1.00s
+[e2_UIEB_10000] upd 8400/10000 loss=0.0832 lr=1.59e-06 1.18s
+[e2_UIEB_10000] val n=89 PSNR=23.1383 SSIM=0.907212
+[e2_UIEB_10000] upd 8500: score=32.2104 best=32.9492 
+[e2_UIEB_10000] upd 8500/10000 loss=0.0992 lr=1.52e-06 0.64s
+[e2_UIEB_10000] upd 8600/10000 loss=0.0758 lr=1.45e-06 1.05s
+[e2_UIEB_10000] upd 8700/10000 loss=0.0746 lr=1.39e-06 1.04s
+[e2_UIEB_10000] upd 8800/10000 loss=0.0830 lr=1.34e-06 0.99s
+[e2_UIEB_10000] upd 8900/10000 loss=0.0911 lr=1.28e-06 2.59s
+[e2_UIEB_10000] val n=89 PSNR=23.1430 SSIM=0.907216
+[e2_UIEB_10000] upd 9000: score=32.2152 best=32.9492 
+[e2_UIEB_10000] upd 9000/10000 loss=0.0712 lr=1.23e-06 0.65s
+[e2_UIEB_10000] upd 9100/10000 loss=0.0986 lr=1.19e-06 0.99s
+[e2_UIEB_10000] upd 9200/10000 loss=0.0857 lr=1.15e-06 1.03s
+[e2_UIEB_10000] upd 9300/10000 loss=0.0686 lr=1.12e-06 2.35s
+[e2_UIEB_10000] upd 9400/10000 loss=0.0708 lr=1.08e-06 1.02s
+[e2_UIEB_10000] val n=89 PSNR=23.1504 SSIM=0.907272
+[e2_UIEB_10000] upd 9500: score=32.2231 best=32.9492 
+[e2_UIEB_10000] upd 9500/10000 loss=0.0824 lr=1.06e-06 0.67s
+[e2_UIEB_10000] upd 9600/10000 loss=0.0789 lr=1.04e-06 1.31s
+[e2_UIEB_10000] upd 9700/10000 loss=0.0686 lr=1.02e-06 1.19s
+[e2_UIEB_10000] upd 9800/10000 loss=0.0844 lr=1.01e-06 1.19s
+[e2_UIEB_10000] upd 9900/10000 loss=0.0787 lr=1.00e-06 0.91s
+[e2_UIEB_10000] val n=89 PSNR=23.1390 SSIM=0.907234
+[e2_UIEB_10000] upd 10000: score=32.2113 best=32.9492 
+[e2_UIEB_10000] scoring best (update 0) on val+test
+[e2_UIEB_10000] best: test n=89 PSNR=24.4604 SSIM=0.921924 | val PSNR=23.8255
+[e2_UIEB_10000] scoring final (update 10000) on val+test
+[e2_UIEB_10000] final: test n=89 PSNR=23.5938 SSIM=0.914639 | val PSNR=23.1390
+[e2_UIEB_10000] wrote /home/user/obsui/runs/ablation_phase1/e2_UIEB_10000/result.json  (243.9 min)

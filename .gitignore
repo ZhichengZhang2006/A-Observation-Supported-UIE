@@ -4,6 +4,9 @@ __pycache__/
 _ops/
 .pytest_cache/
 *.log
+# ...except the archived raw run logs, which are primary evidence and are
+# byte-identical copies of what the runs wrote (hashed in manifest.json).
+!artifacts/phase1_raw/**/*.log
 
 # Large binary intermediates -- reproducible from the scripts, never committed.
 runs/
